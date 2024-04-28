@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="h-screen flex flex-col items-center justify-center">
+    <div class="w-[40%] bg-white dark:bg-gray-800 rounded-lg shadow-md px-16 py-10 border-solid border-2 border-blue-200 flex flex-col items-center justify-center">
+      <h1 class="text-2xl font-bold text-center text-gray-700 dark:text-gray-200 mb-8">Daftar Label</h1>
+      <form action="#" class="w-full flex flex-col gap-4">
+        <div class="flex flex-wrap">
+          <label for="email" class="text-sm text-gray-700 dark:text-gray-200 mb-2">Email</label>
+          <input type="email" id="email" name="email" class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+        </div>
+        <div class="flex flex-wrap">
+          <label for="password" class="text-sm text-gray-700 dark:text-gray-200 mb-2">Password</label>
+          <input type="password" id="password" name="password" class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+        </div>          
+        <div class="flex flex-wrap">
+          <label for="name" class="text-sm text-gray-700 dark:text-gray-200 mb-2">Nama</label>
+          <input type="text" id="name" name="name" class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+        </div>  
+        <div class="flex flex-wrap mb-4">
+          <label for="kontak" class="text-sm text-gray-700 dark:text-gray-200 mb-2">Kontak</label>
+          <input type="text" id="kontak" name="kontak" class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+        </div>  
+        <button type="submit" class="bg-[#749DDC] hover:bg-blue-500 text-white font-medium py-2 px-4 rounded-md shadow-sm">
+          <span class="flex items-center justify-center">
+            <i class="material-icons">account_circle</i>
+            <span class="ml-2">Daftar sebagai Label</span>
+          </span>
+        </button>
+      </form>
+      <div class="mt-4 text-center">
+        <span class="text-sm text-gray-500 dark:text-gray-300">Sudah punya akun? </span>
+        <a href="{% url 'authentication:login' %}" class="text-blue-500 hover:text-blue-600">Log In</a>
+      </div>
+    </div>
+</div>
+{% endblock content %}

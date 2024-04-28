@@ -6,3 +6,9 @@ def login(request):
 
 def register(request):
     return render(request, 'register.html')
+
+def register_user(request):
+    return render(request, 'register-user.html')
+
+def register_label(request):
+    return render(request, 'register-label.html')
