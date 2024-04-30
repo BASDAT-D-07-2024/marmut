@@ -13,3 +13,6 @@ daphne
 psycopg2
 sqlalchemy
 pandas
+django-environ
+django-cors-headers
+django-browser-reload
