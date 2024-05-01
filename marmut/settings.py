@@ -41,6 +41,16 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_browser_reload',
     'authentication',
+    'main',
+    'search',
+    'playlist',
+    'subscription',
+    'download',
+    'podcast',
+    'chart',
+    'album',
+    'song',
+    'royalti',
 ]
 
 MIDDLEWARE = [
