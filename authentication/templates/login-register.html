@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<div class="h-screen flex flex-col items-center justify-center">
+    <div class="w-[40%] bg-[#C5D8FF] dark:bg-gray-800 rounded-lg shadow-md px-16 py-10 border-solid border-2 border-blue-200 flex flex-col items-center justify-center">
+      <div class="p-4 flex flex-row items-center justify-between mb-8">
+        <img src="{% static 'images/marmut.png' %}" class="h-12 mr-2" alt="Marmut Logo">
+        <h1 class="text-3xl font-bold text-center text-gray-700 dark:text-gray-200">Marmut D-7</h1>
+      </div>
+      <a href="{% url 'authentication:login' %}" class="bg-[#5781C4] hover:bg-[#749DDC] text-white font-medium py-2 px-4 rounded-md shadow-sm mb-4 w-full">
+        <span class="flex items-center justify-center">
+          <i class="material-icons">account_circle</i>
+          <span class="ml-2">Login</span>
+        </span>
+      </a>
+      <a href="{% url 'authentication:register' %}" class="bg-[#5781C4] hover:bg-[#749DDC] text-white font-medium py-2 px-4 rounded-md shadow-sm w-full">
+        <span class="flex items-center justify-center">
+          <i class="material-icons">account_circle</i>
+          <span class="ml-2">Register</span>
+        </span>
+      </a>
+    </div>
+</div>
+{% endblock content %}
