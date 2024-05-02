@@ -1,0 +1,261 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-16">
+
+    <div class="w-full p-6 mb-8 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+        <h5 class="text-xl text-center font-bold tracking-tight text-gray-900 dark:text-white">Create Album</h5>
+
+        <form action="#" class="w-full flex flex-col gap-4">
+            <div class="flex items-start flex-col justify-start">
+              <label for="judul" class="text-lg font-bold text-gray-900 dark:text-gray-200 mb-2">Judul</label>
+              <input type="judul" id="judul" name="judul" class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500" required>
+            </div>
+            <div class="flex flex-wrap mb-4">
+                <label for="label" class="text-lg font-bold text-gray-900 dark:text-gray-200 mb-2">Label</label>
+                <select id="label" name="label" class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                  <option value="Label A">Label A</option>
+                  <option value="Label B">Label B</option>
+                  <option value="Label C">Label C</option>
+                  <option value="Label D">Label D</option>
+                  <option value="Label E">Label E</option>
+                </select>
+            </div>
+            <button type="submit" class="bg-[#5781C4] hover:bg-[#749DDC] text-white font-medium py-2 px-4 rounded-md shadow-sm">
+              <span class="justify-center">
+                <span class="ml-2">Submit</span>
+              </span>
+            </button>
+        </form>
+    </div>
+
+    <div class="overflow-x-auto shadow-md sm:rounded-lg mb-8">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <caption class="p-5 text-lg font-bold text-center rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+                List Album
+            </caption>
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Judul
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Label
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Jumlah Lagu
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Total Durasi
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Album A
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        Label A
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        8
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        24 menit
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" onclick="toggleCreateLagu()">Add Song</button>
+                        <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</button>
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Album B
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        Label B
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        9
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        27 menit
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" onclick="toggleCreateLagu()">Add Song</button>
+                        <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</button>
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Album C
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        Label C
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        6
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        18 menit
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" onclick="toggleCreateLagu()">Add Song</button>
+                        <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</button>
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Album D
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        Label D
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        10
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        30 menit
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" onclick="toggleCreateLagu()">Add Song</button>
+                        <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</button>
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Album E
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        Label E
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        7
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        21 menit
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" onclick="toggleCreateLagu()">Add Song</button>
+                        <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</button>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+
+    <div id="create-lagu" class="hidden fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[50%] p-6 bg-[#C5D8FF] border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700 overflow-auto" style="display: none;">
+        <button onclick="toggleCreateLagu()" class="absolute top-2 right-2 text-black-600 dark:text-black-400 focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+        <div>
+            <h5 class="mb-4 text-2xl text-center font-bold tracking-tight text-gray-900 dark:text-white">Create Lagu</h5>
+    
+            <form action="#" class="w-full flex flex-col gap-4">
+                <div class="flex justify-between">
+                    <div class="w-full">
+                        <div class="flex items-start flex-col justify-start">
+                            <label for="album" class="text-lg font-bold text-gray-900 dark:text-gray-200 mb-2">Album</label>
+                            <input type="album" id="album" name="album" placeholder="Album A" disabled class="w-full px-3 dark:text-gray-200 bg-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                        </div>
+                        <div class="flex items-start flex-col justify-start">
+                            <label for="judul" class="text-lg font-bold text-gray-900 dark:text-gray-200 mb-2">Judul</label>
+                            <input type="judul" id="judul" name="judul" class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500" required>
+                        </div>
+                        <div class="flex items-start flex-col justify-start">
+                            <label for="artist" class="text-lg font-bold text-gray-900 dark:text-gray-200 mb-2">Artist</label>
+                            <input type="artist" id="artist" name="artist" placeholder="Eka Pratiwi" disabled class="w-full px-3 dark:text-gray-200 bg-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                        </div>
+                    </div>
+                    <div class="mx-2">
+
+                    </div>
+                    <div class="w-full">
+                        <div class="flex flex-col">
+                            <label for="songwriter" class="text-lg font-bold text-gray-900 dark:text-gray-200 mb-2">Songwriter</label>
+                            <select id="songwriter" name="songwriter[]" multiple class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500" required>
+                                <option value="Maya Fitri">Maya Fitri</option>
+                                <option value="Nando Pratama">Nando Pratama</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col">
+                            <label for="genre" class="text-lg font-bold text-gray-900 dark:text-gray-200 mb-2">Genre</label>
+                            <select id="genre" name="genre" multiple class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500" required>
+                              <option value="Pop">Pop</option>
+                              <option value="Rock">Rock</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col mb-4">
+                            <label for="durasi" class="text-lg font-bold text-gray-900 dark:text-gray-200 mb-2">Durasi</label>
+                            <div class="relative">
+                                <div class="absolute inset-y-0 end-0 top-0 flex items-center pe-3.5 pointer-events-none">
+                                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
+                                        <path fill-rule="evenodd" d="M2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10S2 17.523 2 12Zm11-4a1 1 0 1 0-2 0v4a1 1 0 0 0 .293.707l3 3a1 1 0 0 0 1.414-1.414L13 11.586V8Z" clip-rule="evenodd"/>
+                                    </svg>
+                                </div>
+                                <input type="time" id="durasi" name="durasi" class="bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="00:00" required />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="bg-[#5781C4] hover:bg-[#749DDC] text-white font-medium py-2 px-4 rounded-md shadow-sm">
+                  <span class="justify-center">
+                    <span class="ml-2">Submit</span>
+                  </span>
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Initialize Select2 for songwriter and genre
+        $('#songwriter, #genre').select2();
+
+        // Handle change event for songwriter
+        $('#songwriter').on('change', function() {
+            let selectedValues = $(this).val();
+            updateChips('#songwriter', selectedValues);
+        });
+
+        // Handle change event for genre
+        $('#genre').on('change', function() {
+            let selectedValues = $(this).val();
+            updateChips('#genre', selectedValues);
+        });
+
+        // Function to update chips for selected values
+        function updateChips(selector, values) {
+            let chipContainer = $(selector).closest('.flex').find('.chip-container');
+            chipContainer.empty();
+            if (values) {
+                values.forEach(function(value) {
+                chipContainer.append(`<div class="chip" id=${value}>${value}</div>`);
+                });
+            }
+        }
+
+    });
+
+    // Function to toggle visibility of the "create-lagu" div
+    function toggleCreateLagu() {
+        var createLaguDiv = document.getElementById("create-lagu");
+        if (createLaguDiv.style.display === "none") {
+            createLaguDiv.style.display = "block";
+        } else {
+            createLaguDiv.style.display = "none";
+        }
+    }
+</script>
+
+{% endblock content %}

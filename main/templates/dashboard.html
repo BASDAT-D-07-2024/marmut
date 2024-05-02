@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="px-16 py-8">
+    <div class="bg-[#AECEFF] rounded-lg px-8 py-4">
+        <div class="flex flex-row justify-start">
+            <span class="flex items-center justify-center mr-8">
+                <i class="material-icons text-9xl">account_circle</i>
+            </span>
+            <div class="flex flex-col justify-between">
+                <h1 class="text-xl font-semibold">
+                    Pengguna
+                </h1>
+                <div>
+                    <h1 class="text-3xl font-bold">
+                        Kezia Lasma
+                    </h1>
+                    <p class="mb-4">
+                        kezia12@gmail.com
+                    </p>
+                </div>
+                <p>
+                    Female | Depok | Jakarta, 22 Maret 2004
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4"></div>
+    <div class="bg-[#AECEFF] rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <caption class="p-5 text-lg font-bold text-center rtl:text-right text-gray-900 bg-[#AECEFF] dark:text-white dark:bg-gray-800">
+                User Playlist
+            </caption>
+            <thead class="text-gray-700 font-bold uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Judul
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Jumlah Lagu
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Total Durasi
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Morning Vibes
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        15
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        45 menit
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Chill Zone
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        12
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        36 menit
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Workout Grooves
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        18
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        54 menit
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Road Trip Tunes
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        14
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        42 menit
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Throwback Hits
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        20
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        60 menit
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
