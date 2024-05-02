@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <title>Podcast Detail</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #AECEFF;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1D4F9D;
+            color: #FFFFFF;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            margin: 20px;
+        }
+
+        section {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #1D4F9D;
+        }
+
+        h1 {
+            color: #1D4F9D;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 36px;
+        }
+
+        p {
+            color: #555555;
+            margin-bottom: 5px;
+        }
+
+        .button-container {
+            overflow: hidden;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #1D4F9D;
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3C6EB4;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border-bottom: 1px solid #AECEFF;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #1D4F9D;
+            color: #FFFFFF;
+        }
+
+        tr:hover {
+            background-color: #F2F2F2;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+    <!-- Your navbar code goes here -->
+</nav>
+
+<!-- Main Content -->
+<main>
+    <section id="podcast-info">
+        <h1>Podcast Detail</h1>
+        <p><strong>Judul:</strong> Nama Podcast</p>
+        <p><strong>Genre:</strong> Genre Podcast</p>
+        <p><strong>Nama Podcaster:</strong> Nama Podcaster</p>
+        <p><strong>Durasi Total Podcast:</strong> 1 jam 30 menit</p>
+        <p><strong>Tanggal Rilis:</strong> 1 Januari 2024</p>
+        <p><strong>Tahun:</strong> 2024</p>
+        <div class="button-container">
+            <button onclick="goBack()">Kembali</button>
+        </div>
+    </section>
+
+    <section id="episode-list">
+        <h2>Daftar Episode</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Judul</th>
+                    <th>Deskripsi</th>
+                    <th>Durasi</th>
+                    <th>Tanggal Rilis</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Judul Episode</td>
+                    <td>Deskripsi Episode</td>
+                    <td>45 menit</td>
+                    <td>5 Februari 2024</td>
+                </tr>
+                <tr>
+                    <td>Judul Episode</td>
+                    <td>Deskripsi Episode</td>
+                    <td>1 jam 15 menit</td>
+                    <td>12 Februari 2024</td>
+                </tr>
+                <!-- Add more episodes as needed -->
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
+</body>
+{% endblock content %}

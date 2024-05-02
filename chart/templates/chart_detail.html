@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <title>Chart Detail</title>
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #AECEFF;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1D4F9D;
+            color: #FFFFFF;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            margin: 20px;
+        }
+
+        section {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #1D4F9D;
+        }
+
+        h1 {
+            color: #1D4F9D;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        p {
+            color: #555555;
+            margin-bottom: 5px;
+        }
+
+        .button-container {
+            overflow: hidden;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #1D4F9D;
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3C6EB4;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border-bottom: 1px solid #AECEFF;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #1D4F9D;
+            color: #FFFFFF;
+        }
+
+        tr:hover {
+            background-color: #F2F2F2;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+    <!-- Your navbar code goes here -->
+</nav>
+
+<!-- Main Content -->
+<main>
+    <section id="chart-info">
+        <h1>Chart Detail</h1>
+        <p><strong>Tipe Chart:</strong> Daily Top 20</p>
+        <!-- Add more chart information here if needed -->
+        <div class="button-container">
+            <button onclick="goBack()">Kembali</button>
+        </div>
+    </section>
+
+    <section id="song-list">
+        <h2>Daftar Lagu</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Judul Lagu</th>
+                    <th>Nama Artist</th>
+                    <th>Tanggal Rilis</th>
+                    <th>Total Plays</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Judul Lagu 1</td>
+                    <td>Nama Artist 1</td>
+                    <td>1 Januari 2024</td>
+                    <td>100</td>
+                    <td><button onclick="viewSongDetails()">Lihat</button></td>
+                </tr>
+                <tr>
+                    <td>Judul Lagu 2</td>
+                    <td>Nama Artist 2</td>
+                    <td>2 Januari 2024</td>
+                    <td>90</td>
+                    <td><button onclick="viewSongDetails()">Lihat</button></td>
+                </tr>
+                <!-- Add more songs as needed -->
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+
+    function viewSongDetails() {
+        // Redirect to song detail page
+        // Replace '#' with the URL of the song detail page
+        window.location.href = '#';
+    }
+</script>
+
+</body>
+{% endblock content %}

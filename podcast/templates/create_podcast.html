@@ -1,0 +1,113 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <title>Marmut Podcast Management</title>
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #AECEFF;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1D4F9D;
+            color: #FFFFFF;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            margin: 20px;
+        }
+
+        section {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #1D4F9D;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #1D4F9D;
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3C6EB4;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .checkbox-group label {
+            margin-right: 20px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+    <!-- Your navbar code goes here -->
+</nav>
+
+<!-- Main Content -->
+<main>
+    <section>
+        <h1>Marmut Podcast Management</h1>
+        <form>
+            <label for="podcast_title">Podcast Title:</label>
+            <input type="text" id="podcast_title" name="podcast_title" required>
+            <br>
+            <label>Genre:</label>
+            <div class="checkbox-group">
+                <input type="checkbox" id="genre1" name="genre1" value="Genre1">
+                <label for="genre1"> Genre1</label>
+                <input type="checkbox" id="genre2" name="genre2" value="Genre2">
+                <label for="genre2"> Genre2</label>
+                <input type="checkbox" id="genre3" name="genre3" value="Genre3">
+                <label for="genre3"> Genre3</label>
+            </div>
+            <br>
+            <label for="duration">Duration (minutes):</label>
+            <input type="text" id="duration" name="duration" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+</main>
+
+</body>
+{% endblock content %}

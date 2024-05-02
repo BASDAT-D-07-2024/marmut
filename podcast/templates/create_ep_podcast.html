@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <title>Create Episode</title>
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #AECEFF;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1D4F9D;
+            color: #FFFFFF;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            margin: 20px;
+        }
+
+        section {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #1D4F9D;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 36px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 8px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        button {
+            background-color: #1D4F9D;
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3C6EB4;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+    <!-- Your navbar code goes here -->
+</nav>
+
+<!-- Main Content -->
+<main>
+    <section>
+        <h1>Create Episode</h1>
+        <form>
+            <label for="podcast">Podcast: Podcast1</label>
+
+            <label for="episode_title">Judul:</label>
+            <input type="text" id="episode_title" name="episode_title" required>
+
+            <label for="episode_description">Deskripsi:</label>
+            <input type="text" id="episode_description" name="episode_description" required>
+
+            <label for="duration">Durasi (minutes):</label>
+            <input type="text" id="duration" name="duration" required>
+
+            <button type="submit">Submit</button>
+        </form>
+    </section>
+</main>
+
+</body>
+{% endblock content %}
