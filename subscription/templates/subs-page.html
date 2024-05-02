@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="px-16 py-8">
+    <p class="p-5 text-lg font-bold text-center rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+        Riwayat Transaksi Paket
+    </p>
+    <div class="overflow-x-auto shadow-md sm:rounded-lg mb-8 max-w-full">
+        <p class="p-5 text-sm rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+            Informasi Paket yang Ingin Dibeli:
+        </p>
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Jenis
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Harga
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 text-center">
+                        1 Bulan
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        Rp54.900
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="flex items-center space-x-4">
+            <p class="p-5 text-sm rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+                Metode Pembayaran:
+            </p>
+            <div class="dropdown dropdown-end">
+                <div tabindex="0" role="button" class="btn btn-ghost rounded-btn">Pilihan</div>
+                <ul tabindex="0" class="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
+                    <li><a>Transfer bank</a></li> 
+                    <li><a>Kartu kredit</a></li>
+                    <li><a>E-wallet</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="flex mx-auto justify-center bg-blue-600 w-32 h-9 items-center rounded-md"> 
+        <button class="font-medium text-white-600 dark:text-blue-500 hover:underline" onclick="toggleBack()">Submit</button>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
+<script>
+</script>
+{% endblock content %}

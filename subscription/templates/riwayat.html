@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="px-16 py-8">
+    <div class="overflow-x-auto shadow-md sm:rounded-lg mb-8">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <caption class="p-5 text-lg font-bold text-center rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+                Riwayat Transaksi Paket
+            </caption>
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Jenis
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Tanggal Dimulai
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Tanggal Berakhir
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Metode Pembayaran
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Nominal
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 text-center">
+                        1 Bulan
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        8 April 2024, 23:00
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        8 Mei 2024, 23:00
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        E-Wallet
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        Rp54.900
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 text-center">
+                        2 Bulan
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        12 April 2024, 13:00
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        1 Mei 2024, 13:00
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        E-Wallet
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        Rp82.800
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="flex mx-auto justify-center bg-blue-600 w-32 h-9 items-center rounded-md"> 
+        <button class="font-medium text-white-600 dark:text-blue-500 hover:underline" onclick="toggleBack()">Back</button>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
+<script>
+</script>
+{% endblock content %}
