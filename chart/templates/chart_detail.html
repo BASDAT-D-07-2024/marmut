@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <head>
-    <title>Podcast Detail</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+    <title>Chart Detail</title>
     <style>
         body {
             font-family: 'Lexend', sans-serif;
@@ -93,44 +92,43 @@
 
 <!-- Main Content -->
 <main>
-    <section id="podcast-info">
-        <h1>Podcast Detail</h1>
-        <p><strong>Judul:</strong> Nama Podcast</p>
-        <p><strong>Genre:</strong> Genre Podcast</p>
-        <p><strong>Nama Podcaster:</strong> Nama Podcaster</p>
-        <p><strong>Durasi Total Podcast:</strong> 1 jam 30 menit</p>
-        <p><strong>Tanggal Rilis:</strong> 1 Januari 2024</p>
-        <p><strong>Tahun:</strong> 2024</p>
+    <section id="chart-info">
+        <h1>Chart Detail</h1>
+        <p><strong>Tipe Chart:</strong> Daily Top 20</p>
+        <!-- Add more chart information here if needed -->
         <div class="button-container">
             <button onclick="goBack()">Kembali</button>
         </div>
     </section>
 
-    <section id="episode-list">
-        <h2>Daftar Episode</h2>
+    <section id="song-list">
+        <h2>Daftar Lagu</h2>
         <table>
             <thead>
                 <tr>
-                    <th>Judul</th>
-                    <th>Deskripsi</th>
-                    <th>Durasi</th>
+                    <th>Judul Lagu</th>
+                    <th>Nama Artist</th>
                     <th>Tanggal Rilis</th>
+                    <th>Total Plays</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Judul Episode</td>
-                    <td>Deskripsi Episode</td>
-                    <td>45 menit</td>
-                    <td>5 Februari 2024</td>
+                    <td>Judul Lagu 1</td>
+                    <td>Nama Artist 1</td>
+                    <td>1 Januari 2024</td>
+                    <td>100</td>
+                    <td><button onclick="viewSongDetails()">Lihat</button></td>
                 </tr>
                 <tr>
-                    <td>Judul Episode</td>
-                    <td>Deskripsi Episode</td>
-                    <td>1 jam 15 menit</td>
-                    <td>12 Februari 2024</td>
+                    <td>Judul Lagu 2</td>
+                    <td>Nama Artist 2</td>
+                    <td>2 Januari 2024</td>
+                    <td>90</td>
+                    <td><button onclick="viewSongDetails()">Lihat</button></td>
                 </tr>
-                <!-- Add more episodes as needed -->
+                <!-- Add more songs as needed -->
             </tbody>
         </table>
     </section>
@@ -139,6 +137,12 @@
 <script>
     function goBack() {
         window.history.back();
+    }
+
+    function viewSongDetails() {
+        // Redirect to song detail page
+        // Replace '#' with the URL of the song detail page
+        window.location.href = '#';
     }
 </script>
 

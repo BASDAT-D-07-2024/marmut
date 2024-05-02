@@ -26,7 +26,7 @@ urlpatterns = [
     # path('subscription', include('subscription.urls')),
     # path('download', include('download.urls')),
     path('podcast', include('podcast.urls')),
-    # path('chart', include('chart.urls')),
+    path('chart', include('chart.urls')),
     # path('album', include('album.urls')),
     # path('song', include('song.urls')),
     # path('royalti', include('royalti.urls')),
