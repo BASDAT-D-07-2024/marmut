@@ -1,0 +1,120 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="px-16 py-8">
+
+    <div class="overflow-x-auto shadow-md sm:rounded-lg mb-8">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <caption class="p-5 text-lg font-bold text-center rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+                Daftar Lagu
+            </caption>
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Judul Lagu
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Oleh
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Tanggal Download
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Song1
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        Artist1
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        20/02/2024
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline">See</button>
+                        <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3" onclick="toggleHapusLagu('Song1')">Remove</button>
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Song2
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        Artist2
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        21/03/2024
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline">See</button>
+                        <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3" onclick="toggleHapusLagu('Song2')">Remove</button>
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Song3
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        Artist3
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        22/04/2024
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline">See</button>
+                        <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3" onclick="toggleHapusLagu('Song3')">Remove</button>
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Song4
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        Artist4
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        23/04/2024
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline">See</button>
+                        <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3" onclick="toggleHapusLagu('Song4')">Remove</button>
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+    <div class="flex justify-center"> 
+        <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" onclick="toggleBack()">Back</button>
+    </div>
+    
+    <div id= "remove-lagu" class="absolute justify-center items-center flex-col p-6 mb-8 bg-blue-500 border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700" style="display: none;">
+        <label></label>
+        <div>
+            <button class="font-medium text-center dark:text-blue-500 hover:underline" >Back</button>
+        </div>
+    </div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
+<script>
+    // Function to toggle visibility of the "remove-lagu" div
+    function toggleHapusLagu(judul) {
+        var hapusLaguDiv = document.getElementById("remove-lagu");
+        var labelElement = hapusLaguDiv.querySelector("label");
+
+        if (createLaguDiv.style.display === "none") {
+            createLaguDiv.style.display = "block";
+            labelElement.textContent = "Berhasil menghapus Lagu dengan judul '" + judul + "' dari daftar unduhan!";
+        } else {
+            createLaguDiv.style.display = "none";
+            labelElement.textContent = "";
+        }
+    }
+</script>
+{% endblock content %}
