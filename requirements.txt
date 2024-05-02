@@ -10,8 +10,8 @@ django-cors-headers
 channels
 channels-redis
 daphne
-psycopg2
 sqlalchemy
+
 pandas
 django-environ
 django-cors-headers

@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+def show_playlist(request):
+    return render(request, "show_playlist.html")
+
+def user_playlist(request):
+    return render(request, "user_playlist.html")
