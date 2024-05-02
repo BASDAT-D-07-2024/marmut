@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <title>Podcast List</title>
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #AECEFF;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1D4F9D;
+            color: #FFFFFF;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            margin: 20px;
+        }
+
+        section {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center; /* Mengatur seluruh konten dalam section ke tengah */
+        }
+
+        h2 {
+            color: #1D4F9D;
+            font-size: 36px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: auto; /* Memusatkan tabel */
+            text-align: center;
+        }
+
+        th, td {
+            border-bottom: 1px solid #AECEFF;
+            padding: 8px;
+            text-align: left;
+            text-align: center;
+        }
+
+        th {
+            background-color: #1D4F9D;
+            color: #FFFFFF;
+        }
+
+        tr:hover {
+            background-color: #F2F2F2;
+        }
+
+        .button-container {
+            overflow: hidden;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        button {
+            background-color: #1D4F9D;
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3C6EB4;
+        }
+
+        .action-link {
+            margin-right: 10px;
+            color: #1D4F9D;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+    <!-- Your navbar code goes here -->
+</nav>
+
+<!-- Main Content -->
+<main>
+    <section>
+        <h2>Podcast List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Judul</th>
+                    <th>Jumlah Episode</th>
+                    <th>Total Durasi</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Podcast 1</td>
+                    <td>5</td>
+                    <td>120 minutes</td>
+                    <td>
+                        <a href="#" class="action-link">Lihat Daftar Episode</a>
+                        <a href="#" class="action-link">Tambah Episode</a>
+                        <a href="#" class="action-link">Hapus</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Podcast 2</td>
+                    <td>10</td>
+                    <td>180 minutes</td>
+                    <td>
+                        <a href="#" class="action-link">Lihat Daftar Episode</a>
+                        <a href="#" class="action-link">Tambah Episode</a>
+                        <a href="#" class="action-link">Hapus</a>
+                    </td>
+                </tr>
+                <!-- Add more podcasts as needed -->
+            </tbody>
+        </table>
+    </section>
+    
+    <div class="button-container">
+        <button onclick="location.href='create_podcast.html';">Create Podcast</button>
+    </div>
+</main>
+
+</body>
+{% endblock content %}

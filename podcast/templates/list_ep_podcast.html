@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% block content %}
+<head>
+    <title>Episode List</title>
+    <style>
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: #AECEFF;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1D4F9D;
+            color: #FFFFFF;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main {
+            margin: 20px;
+        }
+
+        section {
+            background-color: #FFFFFF;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center; /* Mengatur seluruh konten dalam section ke tengah */
+        }
+
+        h2 {
+            color: #1D4F9D;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: auto; /* Memusatkan tabel */
+        }
+
+        th, td {
+            border-bottom: 1px solid #AECEFF;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #1D4F9D;
+            color: #FFFFFF;
+        }
+
+        tr:hover {
+            background-color: #F2F2F2;
+        }
+
+        .button-container {
+            overflow: hidden;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .action-link {
+            color: #1D4F9D;
+            cursor: pointer;
+        }
+
+        .action-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav>
+    <!-- Your navbar code goes here -->
+</nav>
+
+<!-- Main Content -->
+<main>
+    <section>
+        <h2>Episode List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Judul Episode</th>
+                    <th>Deskripsi</th>
+                    <th>Durasi</th>
+                    <th>Tanggal</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Episode 1</td>
+                    <td>Deskripsi episode 1</td>
+                    <td>30 minutes</td>
+                    <td>2024-05-10</td>
+                    <td>
+                        <span class="action-link" onclick="hapusEpisode(this)">Hapus</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Episode 2</td>
+                    <td>Deskripsi episode 2</td>
+                    <td>45 minutes</td>
+                    <td>2024-05-15</td>
+                    <td>
+                        <span class="action-link" onclick="hapusEpisode(this)">Hapus</span>
+                    </td>
+                </tr>
+                <!-- Add more episodes as needed -->
+            </tbody>
+        </table>
+    </section>
+</main>
+
+<script>
+    function hapusEpisode(span) {
+        var row = span.parentNode.parentNode;
+        row.parentNode.removeChild(row);
+    }
+</script>
+
+</body>
+{% endblock content %}
