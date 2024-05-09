@@ -9,18 +9,18 @@
             </span>
             <div class="flex flex-col justify-between">
                 <h1 class="text-xl font-semibold">
-                    Pengguna
+                    {{ roles }}
                 </h1>
                 <div>
                     <h1 class="text-3xl font-bold">
-                        Kezia Lasma
+                        {{ nama }}
                     </h1>
                     <p class="mb-4">
-                        kezia12@gmail.com
+                        {{ email }}
                     </p>
                 </div>
                 <p>
-                    Female | Depok | Jakarta, 22 Maret 2004
+                    {{ gender }} | {{ kota_asal }} | {{ tempat_lahir }}, {{ tanggal_lahir }}
                 </p>
             </div>
         </div>
@@ -28,7 +28,7 @@
     <div class="mt-4"></div>
     <div class="bg-[#AECEFF] rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <caption class="p-5 text-lg font-bold text-center rtl:text-right text-gray-900 bg-[#AECEFF] dark:text-white dark:bg-gray-800">
+            <caption class="p-4 text-lg font-bold text-center rtl:text-right text-gray-900 bg-[#AECEFF] dark:text-white dark:bg-gray-800">
                 User Playlist
             </caption>
             <thead class="text-gray-700 font-bold uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -104,5 +104,185 @@
             </tbody>
         </table>
     </div>
+    {% if is_podcaster %}
+    <div class="mt-4"></div>
+    <div class="bg-[#AECEFF] rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <caption class="p-4 text-lg font-bold text-center rtl:text-right text-gray-900 bg-[#AECEFF] dark:text-white dark:bg-gray-800">
+                Daftar Podcast
+            </caption>
+            <thead class="text-gray-700 font-bold uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Judul
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Jumlah Episode
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Total Durasi
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Podcast 1
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        15
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        45 menit
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Podcast 2
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        12
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        36 menit
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Podcast 3
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        18
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        54 menit
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Podcast 4
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        14
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        42 menit
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Podcast 5
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        20
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        60 menit
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+    {% if is_artist or is_songwriter %}
+    <div class="mt-4"></div>
+    <div class="bg-[#AECEFF] rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <caption class="p-4 text-lg font-bold text-center rtl:text-right text-gray-900 bg-[#AECEFF] dark:text-white dark:bg-gray-800">
+                Daftar Lagu
+            </caption>
+            <thead class="text-gray-700 font-bold uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Judul
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Durasi
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Total Play
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Total Download
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Lagu A
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        3 menit
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        8
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        24
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Lagu B
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        3 menit
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        9
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        27
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Lagu C
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        3 menit
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        6
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        18
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Lagu D
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        3 menit
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        10
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        30
+                    </td>
+                </tr>
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        Lagu E
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        3 menit
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        7
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        21
+                    </td>
+                </tr>
+                
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
 </div>
 {% endblock content %}
