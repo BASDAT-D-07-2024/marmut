@@ -1,20 +1,21 @@
+import locale
 import psycopg2
 from utils.db_utils import get_db_connection
+from django.contrib import messages
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.contrib import messages
 from django.views.decorators.http import require_http_methods
 
 @require_http_methods(['GET'])
 def login_register(request):
-    if request.session.get('username') is not None:
-        return redirect('dashboard')
+    if request.session.get('role') is not None:
+        return redirect('main:dashboard')
     return render(request, 'login-register.html')
 
 @require_http_methods(['GET', 'POST'])
 def login(request):
-    if request.session.get('username') is not None:
-        return redirect('dashboard')
+    if request.session.get('role') is not None:
+        return redirect('main:dashboard')
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
@@ -32,10 +33,10 @@ def login(request):
             if user is not None:
                 request.session['role'] = []
                 if is_label(email):
-                    request.session['username'] = user[1]
+                    request.session['user'] = extract_label_data(user)
                     request.session['role'] += ['label']
                 else:
-                    request.session['username'] = user[2]
+                    request.session['user'] = extract_user_data(user)
                     if is_premium(email):
                         request.session['role'] += ['premium']
                     else:
@@ -65,26 +66,48 @@ def login(request):
 
 @require_http_methods(['GET'])
 def register(request):
-    if request.session.get('username') is not None:
-        return redirect('dashboard')
+    if request.session.get('role') is not None:
+        return redirect('main:dashboard')
     return render(request, 'register.html')
 
 @require_http_methods(['GET', 'POST'])
 def register_user(request):
-    if request.session.get('username') is not None:
-        return redirect('dashboard')
+    if request.session.get('role') is not None:
+        return redirect('main:dashboard')
     return render(request, 'register-user.html')
 
 @require_http_methods(['GET', 'POST'])
 def register_label(request):
-    if request.session.get('username') is not None:
-        return redirect('dashboard')
+    if request.session.get('role') is not None:
+        return redirect('main:dashboard')
     return render(request, 'register-label.html')
 
 @require_http_methods(['GET'])
 def logout(request):
     request.session.flush()
     return redirect('authentication:login_register')
+
+def extract_user_data(user):
+    gender = 'Laki-laki' if user[3] == 1 else 'Perempuan'
+    x = user[5]
+    locale.setlocale(locale.LC_ALL, 'id_ID')
+    tanggal_lahir = f'{x.strftime("%d")} {x.strftime("%B")} {x.strftime("%Y")}'
+    return {
+        'email': user[0],
+        'nama': user[2],
+        'gender': gender,
+        'tempat_lahir': user[4],
+        'tanggal_lahir': tanggal_lahir,
+        'is_verified': user[6],
+        'kota_asal': user[7],
+    }
+
+def extract_label_data(label):
+    return {
+        'nama': label[1],
+        'email': label[2],
+        'kontak': label[4],
+    }
 
 def is_premium(email):
     try:
