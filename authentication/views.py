@@ -29,6 +29,8 @@ def login(request):
             if is_label(email):
                 cursor.execute("SELECT * FROM label WHERE email = %s AND password = %s", (email, password))
             else:
+                cursor.execute("CALL check_premium_membership(%s)", (email,))
+                connection.commit()
                 cursor.execute("SELECT * FROM akun WHERE email = %s AND password = %s", (email, password))
            
             user = cursor.fetchone()
@@ -77,6 +79,60 @@ def register(request):
 def register_user(request):
     if request.session.get('role') is not None:
         return redirect('main:dashboard')
+    
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        nama = request.POST['nama']
+        gender = request.POST['gender']
+        tempat_lahir = request.POST['tempat-lahir']
+        tanggal_lahir = request.POST['tanggal-lahir']
+        kota_asal = request.POST['kota-asal']
+        role = request.POST.getlist('role')
+
+        if not role:
+            is_verified = False
+        else:
+            is_verified = True
+
+        if gender == 'male':
+            gender = 1
+        else:
+            gender = 0
+
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor()
+
+            cursor.execute("INSERT INTO akun (email, password, nama, gender, tempat_lahir, tanggal_lahir, is_verified, kota_asal) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)", (email, password, nama, gender, tempat_lahir, tanggal_lahir, is_verified, kota_asal))
+            connection.commit()
+
+            random_uuid_phc = uuid.uuid4()
+            if ('artist' in role) or ('songwriter' in role):
+                cursor.execute("INSERT INTO PEMILIK_HAK_CIPTA (id, rate_royalti) VALUES (%s, %s)", (random_uuid_phc, 10000))
+                connection.commit()
+
+            if 'artist' in role:
+                cursor.execute("INSERT INTO artist (id, email_akun, id_pemilik_hak_cipta) VALUES (%s, %s, %s)", (uuid.uuid4(), email, random_uuid_phc))
+                connection.commit()
+            if 'songwriter' in role:
+                cursor.execute("INSERT INTO songwriter (id, email_akun, id_pemilik_hak_cipta) VALUES (%s, %s, %s)", (uuid.uuid4(), email, random_uuid_phc))
+                connection.commit()
+            if 'podcaster' in role:
+                cursor.execute("INSERT INTO podcaster (email) VALUES (%s)", (email,))
+                connection.commit()
+
+            messages.success(request, 'Registration successful!')
+            return redirect('authentication:login')
+        except psycopg2.Error as e:
+            error_message = str(e).splitlines()[0]
+            messages.error(request, error_message)
+            return redirect('authentication:register_user')
+        finally:
+            if connection:
+                cursor.close()
+                connection.close()
+
     return render(request, 'register-user.html')
 
 @require_http_methods(['GET', 'POST'])
@@ -107,8 +163,8 @@ def register_label(request):
             return redirect('authentication:login')
 
         except psycopg2.Error as e:
-            print(e)
-            messages.error(request, 'Registration failed')
+            error_message = str(e).splitlines()[0]
+            messages.error(request, error_message)
             return redirect('authentication:register_label')
 
         finally:
