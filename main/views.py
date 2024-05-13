@@ -1,6 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 def dashboard(request):
+    if request.session.get('role') is None:
+        return redirect('authentication:login')
+    
     role = request.session.get('role')
     user = request.session.get('user')
     
