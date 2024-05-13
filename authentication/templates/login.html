@@ -25,7 +25,7 @@
       </form>
       {% if messages %}
       {% for message in messages %}
-      <div class="text-red-500 text-center">
+      <div class="{% if message.tags == 'success' %}text-green-800{% elif message.tags == 'error' %}text-red-500{% endif %} text-center font-medium mt-2">
           <p>{{ message }}</p>
       </div>
       {% endfor %}
