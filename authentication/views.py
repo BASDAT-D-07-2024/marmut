@@ -1,5 +1,6 @@
 import locale
 import psycopg2
+import uuid
 from utils.db_utils import get_db_connection
 from django.contrib import messages
 from django.http import HttpResponse
@@ -16,18 +17,20 @@ def login_register(request):
 def login(request):
     if request.session.get('role') is not None:
         return redirect('main:dashboard')
+    
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
         
         try:
-            connection = get_db_connection()
-            
+            connection = get_db_connection()      
             cursor = connection.cursor()
+
             if is_label(email):
                 cursor.execute("SELECT * FROM label WHERE email = %s AND password = %s", (email, password))
             else:
                 cursor.execute("SELECT * FROM akun WHERE email = %s AND password = %s", (email, password))
+           
             user = cursor.fetchone()
 
             if user is not None:
@@ -49,7 +52,7 @@ def login(request):
                         request.session['role'] += ['songwriter']
                 return redirect('main:dashboard')
             else:
-                messages.error(request, 'Email or password is incorrect')
+                messages.error(request, 'Email or password is incorrect!')
                 return redirect('authentication:login')
 
         except psycopg2.Error as e:
@@ -80,6 +83,38 @@ def register_user(request):
 def register_label(request):
     if request.session.get('role') is not None:
         return redirect('main:dashboard')
+    
+    if request.method == 'POST':
+        email = request.POST['email']
+        password = request.POST['password']
+        nama = request.POST['name']
+        kontak = request.POST['kontak']
+        
+        try:
+            connection = get_db_connection()
+
+            random_uuid_phc = uuid.uuid4()
+            cursor = connection.cursor()
+            cursor.execute("INSERT INTO PEMILIK_HAK_CIPTA (id, rate_royalti) VALUES (%s, %s)", (random_uuid_phc, 10000))
+            connection.commit()
+
+            random_uuid_label = uuid.uuid4()
+            cursor = connection.cursor()
+            cursor.execute("INSERT INTO label (id, nama, email, password, kontak, id_pemilik_hak_cipta) VALUES (%s, %s, %s, %s, %s, %s)", (random_uuid_label, nama, email, password, kontak, random_uuid_phc))
+            connection.commit()
+            messages.success(request, 'Registration successful!')
+
+            return redirect('authentication:login')
+
+        except psycopg2.Error as e:
+            print(e)
+            messages.error(request, 'Registration failed')
+            return redirect('authentication:register_label')
+
+        finally:
+            if connection:
+                cursor.close()
+                connection.close()
     return render(request, 'register-label.html')
 
 @require_http_methods(['GET'])
