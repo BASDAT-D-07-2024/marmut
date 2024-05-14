@@ -49,7 +49,7 @@
                         <td class="px-6 py-4 text-center">
                             <a href="{% url 'album:view_album' album.id %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Detail</a>
                             {% if is_artist or is_songwriter %}
-                            <a href="{% url 'album:create_song' album.id %}" class="font-medium text-green-600 dark:text-blue-500 hover:underline ml-4">Add Song</buttoa>
+                            <a href="{% url 'album:create_song' album.id %}" class="font-medium text-green-600 dark:text-blue-500 hover:underline ml-4">Add Song</a>
                             {% endif %}
                             <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3" data-url="{% url 'album:delete_album' album.id %}" onclick="deleteAlbum(this)">Remove</button>
                         </td>
