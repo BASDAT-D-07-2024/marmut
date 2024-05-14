@@ -1,12 +1,13 @@
 import uuid
-from django.http import JsonResponse
 import psycopg2
 from datetime import date
 from django.contrib import messages
+from django.http import JsonResponse
 from utils.db_utils import get_db_connection
 from django.shortcuts import render, redirect
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.cache import never_cache
 
+@never_cache
 def list_album(request):
     if request.session.get('role') is None:
         return redirect('authentication:login')
@@ -249,11 +250,13 @@ def create_song(request, album_id):
             cursor.close()
             connection.close()
 
-@require_http_methods(["DELETE"])
 def delete_album(request, album_id):
     if request.session.get('role') is None:
         return redirect('authentication:login')
     
+    if request.method != 'DELETE':
+        return JsonResponse({'message': 'Method not allowed'}, status=405)
+
     role = request.session.get('role')
 
     if 'label' in role or 'artist' in role or 'songwriter' in role:
@@ -279,6 +282,41 @@ def delete_album(request, album_id):
             return JsonResponse({'message': 'Album deleted successfully'}, status=200)
         except psycopg2.Error as error:
             return JsonResponse({'message': 'Error while deleting album'}, status=500)
+        finally:
+            if connection:
+                cursor.close()
+                connection.close()
+
+def delete_song(request, song_id):
+    if request.session.get('role') is None:
+        return redirect('authentication:login')
+    
+    if request.method != 'DELETE':
+        return JsonResponse({'message': 'Method not allowed'}, status=405)
+    
+    role = request.session.get('role')
+
+    if 'label' in role or 'artist' in role or 'songwriter' in role:
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor()
+
+            cursor.execute('SELECT * FROM SONG WHERE id_konten = %s', (song_id,))
+            song = cursor.fetchone()
+
+            if song is None:
+                return JsonResponse({'message': 'Song not found'}, status=404)
+            
+            cursor.execute('DELETE FROM SONG WHERE id_konten = %s', (song_id,))
+            connection.commit()
+            
+            cursor.execute('DELETE FROM KONTEN WHERE id = %s', (song_id,))
+            connection.commit()
+
+            return JsonResponse({'message': 'Song deleted successfully'}, status=200)
+        except psycopg2.Error as error:
+            print(error)
+            return JsonResponse({'message': 'Error while deleting song'}, status=500)
         finally:
             if connection:
                 cursor.close()
