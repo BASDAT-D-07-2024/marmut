@@ -1,3 +1,4 @@
 from django.shortcuts import render
 
-# Create your views here.
+def royalti(request):
+    return render(request, 'list-royalti.html')
