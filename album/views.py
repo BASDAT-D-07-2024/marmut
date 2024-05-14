@@ -1,9 +1,11 @@
 import uuid
+from django.http import JsonResponse
 import psycopg2
 from datetime import date
 from django.contrib import messages
 from utils.db_utils import get_db_connection
 from django.shortcuts import render, redirect
+from django.views.decorators.http import require_http_methods
 
 def list_album(request):
     if request.session.get('role') is None:
@@ -256,6 +258,41 @@ def create_album(request):
                 cursor.close()
                 connection.close()
     return redirect('main:dashboard')
+
+@require_http_methods(["DELETE"])
+def delete_album(request, album_id):
+    if request.session.get('role') is None:
+        return redirect('authentication:login')
+    
+    role = request.session.get('role')
+
+    if 'label' in role or 'artist' in role or 'songwriter' in role:
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor()
+
+            cursor.execute('SELECT * FROM ALBUM WHERE id = %s', (album_id,))
+            album = cursor.fetchone()
+
+            if album is None:
+                return JsonResponse({'message': 'Album not found'}, status=404)
+            
+            cursor.execute('SELECT * FROM SONG WHERE id_album = %s', (album_id,))
+            songs = cursor.fetchall()
+
+            for i in range(len(songs)):
+                cursor.execute('DELETE FROM KONTEN WHERE id = %s', (songs[i][0],))
+                connection.commit()
+
+            cursor.execute('DELETE FROM ALBUM WHERE id = %s', (album_id,))
+            connection.commit()
+            return JsonResponse({'message': 'Album deleted successfully'}, status=200)
+        except psycopg2.Error as error:
+            return JsonResponse({'message': 'Error while deleting album'}, status=500)
+        finally:
+            if connection:
+                cursor.close()
+                connection.close()
 
 def today_date():
     today = date.today()

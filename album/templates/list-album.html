@@ -51,7 +51,7 @@
                             {% if is_artist or is_songwriter %}
                             <button class="font-medium text-green-600 dark:text-blue-500 hover:underline ml-4" onclick="toggleCreateLagu()">Add Song</button>
                             {% endif %}
-                            <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</button>
+                            <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3" data-url="{% url 'album:delete_album' album.id %}" onclick="deleteAlbum(this)">Remove</button>
                         </td>
                     </tr>
                 {% endfor %}
@@ -172,6 +172,30 @@
             createLaguDiv.style.display = "block";
         } else {
             createLaguDiv.style.display = "none";
+        }
+    }
+
+    function deleteAlbum(button) {
+        const url = button.getAttribute('data-url');
+        
+        if (confirm('Are you sure you want to delete this album?')) {
+            fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                if (response.ok) {
+                    // If the delete is successful, remove the row from the table
+                    const row = button.closest('tr');
+                    row.remove();
+                } else {
+                    alert('Failed to delete the album');
+                }
+            })
+            .catch(error => console.error('Error:', error));
         }
     }
 </script>
