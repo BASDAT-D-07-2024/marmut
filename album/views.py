@@ -170,6 +170,125 @@ def create_album(request):
                 cursor.close()
                 connection.close()
 
+    if 'artist' in role or 'songwriter' in role:
+        try:
+            context = fetch_data_for_create_song(role, user)
+            return render(request, 'create-album.html', context)
+        except psycopg2.Error as error:
+            messages.error(request, 'Error while fetching data from database')
+            return render(request, 'create-album.html')
+
+    return redirect('main:dashboard')
+
+def create_song(request, album_id):
+    if request.session.get('role') is None:
+        return redirect('authentication:login')
+    
+    role = request.session.get('role')
+    user = request.session.get('user')
+
+    if 'artist' not in role and 'songwriter' not in role:
+        return redirect('main:dashboard')
+
+    if request.method == 'POST':
+        id_album = request.POST.get('album_id')
+        judul_lagu = request.POST.get('judul_lagu')
+        id_artist = request.POST.get('artist_id')
+        id_songwriter = request.POST.getlist('songwriter')
+        genre = request.POST.getlist('genre')
+        durasi = request.POST.get('durasi')
+
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor()
+
+            id_konten = uuid.uuid4()
+            tanggal_rilis, tahun = today_date()
+            cursor.execute('INSERT INTO KONTEN (id, judul, tanggal_rilis, tahun, durasi) VALUES (%s, %s, %s, %s, %s)', (id_konten, judul_lagu, tanggal_rilis, tahun, durasi))
+            connection.commit()
+
+            cursor.execute('INSERT INTO SONG (id_konten, id_artist, id_album, total_play, total_download) VALUES (%s, %s, %s, %s, %s)', (id_konten, id_artist, id_album, 0, 0))
+            connection.commit()
+
+            for i in range(len(genre)):
+                cursor.execute('INSERT INTO GENRE (id_konten, genre) VALUES (%s, %s)', (id_konten, genre[i]))
+                connection.commit()
+
+            for i in range(len(id_songwriter)):
+                cursor.execute('INSERT INTO SONGWRITER_WRITE_SONG (id_songwriter, id_song) VALUES (%s, %s)', (id_songwriter[i], id_konten))
+                connection.commit()
+
+            messages.success(request, 'Song created successfully')
+            return redirect('album:list_album')
+        except psycopg2.Error as error:
+            messages.error(request, 'Error while inserting data to database')
+            return redirect('album:create_song')
+        finally:
+            if connection:
+                cursor.close()
+                connection.close()
+
+    try:
+        connection = get_db_connection()
+        cursor = connection.cursor()
+
+        context = fetch_data_for_create_song(role, user)
+        cursor.execute('SELECT * FROM ALBUM WHERE id = %s', (album_id,))
+        album = cursor.fetchone()
+        album = {
+            'id': album_id,
+            'judul': album[1],
+        }
+        context['album'] = album
+        return render(request, 'create-song.html', context)
+    except psycopg2.Error as error:
+        messages.error(request, 'Error while fetching data from database')
+        return render(request, 'create-song.html')
+    finally:
+        if connection:
+            cursor.close()
+            connection.close()
+
+@require_http_methods(["DELETE"])
+def delete_album(request, album_id):
+    if request.session.get('role') is None:
+        return redirect('authentication:login')
+    
+    role = request.session.get('role')
+
+    if 'label' in role or 'artist' in role or 'songwriter' in role:
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor()
+
+            cursor.execute('SELECT * FROM ALBUM WHERE id = %s', (album_id,))
+            album = cursor.fetchone()
+
+            if album is None:
+                return JsonResponse({'message': 'Album not found'}, status=404)
+            
+            cursor.execute('SELECT * FROM SONG WHERE id_album = %s', (album_id,))
+            songs = cursor.fetchall()
+
+            for i in range(len(songs)):
+                cursor.execute('DELETE FROM KONTEN WHERE id = %s', (songs[i][0],))
+                connection.commit()
+
+            cursor.execute('DELETE FROM ALBUM WHERE id = %s', (album_id,))
+            connection.commit()
+            return JsonResponse({'message': 'Album deleted successfully'}, status=200)
+        except psycopg2.Error as error:
+            return JsonResponse({'message': 'Error while deleting album'}, status=500)
+        finally:
+            if connection:
+                cursor.close()
+                connection.close()
+
+def today_date():
+    today = date.today()
+    return (today.strftime('%Y-%m-%d'), today.strftime('%Y'))
+
+def fetch_data_for_create_song(role, user):
     context = {
         'is_artist': 'artist' in role,
         'is_songwriter': 'songwriter' in role,
@@ -249,51 +368,11 @@ def create_album(request):
                 }
                 context['genres'].append(genre)
 
-            return render(request, 'create-album.html', context)
+            return context
         except psycopg2.Error as error:
-            messages.error(request, 'Error while fetching data from database')
-            return render(request, 'create-album.html')
-        finally:
-            if connection:
-                cursor.close()
-                connection.close()
-    return redirect('main:dashboard')
-
-@require_http_methods(["DELETE"])
-def delete_album(request, album_id):
-    if request.session.get('role') is None:
-        return redirect('authentication:login')
-    
-    role = request.session.get('role')
-
-    if 'label' in role or 'artist' in role or 'songwriter' in role:
-        try:
-            connection = get_db_connection()
-            cursor = connection.cursor()
-
-            cursor.execute('SELECT * FROM ALBUM WHERE id = %s', (album_id,))
-            album = cursor.fetchone()
-
-            if album is None:
-                return JsonResponse({'message': 'Album not found'}, status=404)
+            raise error('Error while fetching data from database')
             
-            cursor.execute('SELECT * FROM SONG WHERE id_album = %s', (album_id,))
-            songs = cursor.fetchall()
-
-            for i in range(len(songs)):
-                cursor.execute('DELETE FROM KONTEN WHERE id = %s', (songs[i][0],))
-                connection.commit()
-
-            cursor.execute('DELETE FROM ALBUM WHERE id = %s', (album_id,))
-            connection.commit()
-            return JsonResponse({'message': 'Album deleted successfully'}, status=200)
-        except psycopg2.Error as error:
-            return JsonResponse({'message': 'Error while deleting album'}, status=500)
         finally:
             if connection:
                 cursor.close()
                 connection.close()
-
-def today_date():
-    today = date.today()
-    return (today.strftime('%Y-%m-%d'), today.strftime('%Y'))
