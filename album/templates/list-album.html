@@ -3,6 +3,7 @@
 {% block content %}
 <div class="p-16">
 
+    {% if is_artist or is_songwriter %}
     <div class="w-full p-6 mb-8 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
         <h5 class="text-xl text-center font-bold tracking-tight text-gray-900 dark:text-white">Create Album</h5>
 
@@ -28,6 +29,7 @@
             </button>
         </form>
     </div>
+    {% endif %}
 
     <div class="overflow-x-auto shadow-md sm:rounded-lg mb-8">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -39,9 +41,11 @@
                     <th scope="col" class="px-6 py-3 text-center">
                         Judul
                     </th>
+                    {% if is_artist or is_songwriter %}
                     <th scope="col" class="px-6 py-3 text-center">
                         Label
                     </th>
+                    {% endif %}
                     <th scope="col" class="px-6 py-3 text-center">
                         Jumlah Lagu
                     </th>
@@ -54,97 +58,31 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Album A
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        Label A
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        8
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        24 menit
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" onclick="toggleCreateLagu()">Add Song</button>
-                        <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</button>
-                    </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Album B
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        Label B
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        9
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        27 menit
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" onclick="toggleCreateLagu()">Add Song</button>
-                        <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</button>
-                    </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Album C
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        Label C
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        6
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        18 menit
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" onclick="toggleCreateLagu()">Add Song</button>
-                        <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</button>
-                    </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Album D
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        Label D
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        10
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        30 menit
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" onclick="toggleCreateLagu()">Add Song</button>
-                        <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</button>
-                    </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Album E
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        Label E
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        7
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        21 menit
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline" onclick="toggleCreateLagu()">Add Song</button>
-                        <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</button>
-                    </td>
-                </tr>
-                
+                {% for album in albums %}
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ album.judul }}
+                        </th>
+                        {% if is_artist or is_songwriter %}
+                        <td class="px-6 py-4 text-center">
+                            {{ album.label }}
+                        </td>
+                        {% endif %}
+                        <td class="px-6 py-4 text-center">
+                            {{ album.jumlah_lagu }}
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            {{ album.total_durasi }}
+                        </td>
+                        <td class="px-6 py-4 text-center flex justify-around">
+                            <a href="{% url 'album:view_album' album.id %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Detail</a>
+                            {% if is_artist or is_songwriter %}
+                            <button class="font-medium text-green-600 dark:text-blue-500 hover:underline" onclick="toggleCreateLagu()">Add Song</button>
+                            {% endif %}
+                            <button class="font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</button>
+                        </td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </div>
