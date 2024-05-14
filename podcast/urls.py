@@ -1,5 +1,5 @@
 from django.urls import path
-from podcast.views import play_podcast,create_ep_podcast,create_podcast,list_ep_podcast,list_podcast
+from podcast.views import *
 
 app_name = 'podcast'
 

@@ -1,5 +1,5 @@
 from django.urls import path
-from chart.views import chart_list, chart_detail
+from chart.views import *
 
 app_name = 'chart'
 

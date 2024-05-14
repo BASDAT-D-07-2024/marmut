@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        font-family: 'Lexend', sans-serif;
+        margin: 0;
+        padding: 0;
+        background: white;
+    }
+
+    .header {
+        padding: 12px 60px;
+        background: #AECEFF;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .action-buttons {
+    display: flex; /* Mengaktifkan flexbox */
+    justify-content: space-around; /* Menyebarkan item secara merata di sepanjang sumbu utama */
+    align-items: center; /* Menengahkan item secara vertikal */
+    }
+
+    .control-button {
+        padding: 5px 10px; /* Padding untuk tombol */
+        margin: 2px; /* Margin kecil di sekitar tombol */
+        background: #007BFF; /* Warna latar belakang default */
+        color: white; /* Warna teks */
+        text-decoration: none; /* Menghilangkan garis bawah teks */
+        border-radius: 5px; /* Membulatkan sudut tombol */
+        font-size: 14px; /* Ukuran font */
+    }
+
+    .warning-button {
+        background: #DC7474;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 12px;
+        font-size: 16px;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    .primary-button {
+        background: #5781C4;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 12px;
+        font-size: 16px;
+        font-weight: 600;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
+    }
+
+    .secondary-button {
+        background: #8B9BB5;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 12px;
+        font-size: 16px;
+    }
+
+    h1 {
+        font-size: 32px;
+        font-family: 'Urbanist', sans-serif;
+        font-weight: 800;
+        color: #443642;
+    }
+
+    .menu-item {
+        color: #1A2223;
+        font-size: 20px;
+        font-weight: 600;
+    }
+
+    .page-container {
+        max-width: 1440px;
+        margin: auto;
+        position: relative;
+        padding-top: 60px;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .info, .playlist-details {
+        text-align: center;
+    }
+
+    .song-info {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        margin-top: 10px;
+    }
+
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 20px;
+        border-bottom: 1px solid #ddd;
+    }
+</style>
+
+    <div class="content">
+        <h1>Playlist 1</h1>
+        <p>Lorem ipsum dolor sit amet</p>
+        <div>@username - 37 songs, 2 hr 35 min</div>
+
+        <div class="control-button primary-button">Shuffle Play</div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Judul</th>
+                    <th>Penyanyi</th>
+                    <th>Durasi</th>
+                    <th>Aksi</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Song 1</td>
+                    <td>Artist 1</td>
+                    <td>3:29</td>
+                    <td>
+                        <a class="control-button primary-button">Details</a>
+                        <a class="control-button secondary-button">Edit</a>
+                        <a class="control-button warning-button">Delete</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Song 2</td>
+                    <td>Artist 2</td>
+                    <td>4:28</td>
+                    <td>
+                        <a class="control-button primary-button">Details</a>
+                        <a class="control-button secondary-button">Edit</a>
+                        <a class="control-button warning-button">Delete</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Song 3</td>
+                    <td>Artist 3</td>
+                    <td>2:29</td>
+                    <td>
+                        <a class="control-button primary-button">Details</a>
+                        <a class="control-button secondary-button">Edit</a>
+                        <a class="control-button warning-button">Delete</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Song 4</td>
+                    <td>Artist 4</td>
+                    <td>7:20</td>
+                    <td>
+                        <a class="control-button primary-button">Details</a>
+                        <a class="control-button secondary-button">Edit</a>
+                        <a class="control-button warning-button">Delete</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Song 5</td>
+                    <td>Artist 5</td>
+                    <td>1:43</td>
+                    <td>
+                        <a class="control-button primary-button">Details</a>
+                        <a class="control-button secondary-button">Edit</a>
+                        <a class="control-button warning-button">Delete</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="control-button primary-button">Tambah Lagu</div>
+    </div>
+</div>
+{% endblock content %}
