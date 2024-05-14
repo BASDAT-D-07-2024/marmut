@@ -28,97 +28,25 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Lagu A
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        Album A
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        8
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        24
-                    </td>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        Rp 450000
-                    </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Lagu B
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        Album B
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        9
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        27
-                    </td>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        Rp 475000
-                    </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Lagu C
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        Album C
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        6
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        18
-                    </td>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        Rp 300000
-                    </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Lagu D
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        Album D
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        10
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        30
-                    </td>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        Rp 900000
-                    </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Lagu E
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        Album E
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        7
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        21
-                    </td>
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        Rp 400000
-                    </td>
-                </tr>
-                
+                {% for royalti in royalties %}
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ royalti.judul_lagu }}
+                        </th>
+                        <td class="px-6 py-4 text-center">
+                            {{ royalti.judul_album }}
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            {{ royalti.total_play }}
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            {{ royalti.total_download }}
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            Rp {{ royalti.total_royalti }}
+                        </td>
+                    </tr>
+                {% endfor %} 
             </tbody>
         </table>
     </div>
