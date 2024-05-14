@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="px-16 py-8">
+    <div class="bg-[#AECEFF] rounded-lg px-8 py-4">
+        <div class="flex flex-row justify-start">
+            <span class="flex items-center justify-center mr-8">
+                <i class="material-icons text-9xl">account_circle</i>
+            </span>
+            <div class="flex flex-col justify-center">
+                <h1 class="text-3xl font-bold mb-2">
+                    {{ nama }}
+                </h1>
+                <p class="mb-2">
+                    {{ email }} | {{ kontak }}
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="mt-4"></div>
+    {% if not albums %}
+    <div class="bg-[#AECEFF] rounded-lg px-8 py-4">
+        <p class="text-center text-lg font-bold text-gray-900">
+            Belum Memproduksi Album
+        </p>
+    </div>
+    {% else %}
+    <div class="bg-[#AECEFF] rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <caption class="p-4 text-lg font-bold text-center rtl:text-right text-gray-900 bg-[#AECEFF] dark:text-white dark:bg-gray-800">
+                Daftar Album
+            </caption>
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Judul
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Jumlah Lagu
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Total Durasi
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for album in albums %}
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {{ album.judul }}
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        {{ album.jumlah_lagu }}
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        {{ album.total_durasi }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

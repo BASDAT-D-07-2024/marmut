@@ -9,26 +9,33 @@
             </span>
             <div class="flex flex-col justify-between">
                 <h1 class="text-xl font-semibold">
-                    Pengguna
+                    {{ roles }}
                 </h1>
                 <div>
                     <h1 class="text-3xl font-bold">
-                        Kezia Lasma
+                        {{ nama }}
                     </h1>
                     <p class="mb-4">
-                        kezia12@gmail.com
+                        {{ email }}
                     </p>
                 </div>
                 <p>
-                    Female | Depok | Jakarta, 22 Maret 2004
+                    {{ gender }} | {{ kota_asal }} | {{ tempat_lahir }}, {{ tanggal_lahir }}
                 </p>
             </div>
         </div>
     </div>
     <div class="mt-4"></div>
+    {% if not playlists %}
+    <div class="bg-[#AECEFF] rounded-lg px-8 py-4">
+        <p class="text-center text-lg font-bold text-gray-900">
+            Belum Memiliki Playlist
+        </p>
+    </div>
+    {% else %}
     <div class="bg-[#AECEFF] rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <caption class="p-5 text-lg font-bold text-center rtl:text-right text-gray-900 bg-[#AECEFF] dark:text-white dark:bg-gray-800">
+            <caption class="p-4 text-lg font-bold text-center rtl:text-right text-gray-900 bg-[#AECEFF] dark:text-white dark:bg-gray-800">
                 User Playlist
             </caption>
             <thead class="text-gray-700 font-bold uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -45,64 +52,122 @@
                 </tr>
             </thead>
             <tbody>
+                {% for playlist in playlists %}
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Morning Vibes
+                        {{ playlist.judul }}
                     </th>
                     <td class="px-6 py-4 text-center">
-                        15
+                        {{ playlist.jumlah_lagu }}
                     </td>
                     <td class="px-6 py-4 text-center">
-                        45 menit
+                        {{ playlist.total_durasi }}
                     </td>
                 </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Chill Zone
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        12
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        36 menit
-                    </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Workout Grooves
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        18
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        54 menit
-                    </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Road Trip Tunes
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        14
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        42 menit
-                    </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Throwback Hits
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        20
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        60 menit
-                    </td>
-                </tr>
-                
+                {% endfor %}
             </tbody>
         </table>
     </div>
+    {% endif %}
+
+    {% if is_podcaster %}
+    <div class="mt-4"></div>
+    {% if not podcasts %}
+    <div class="bg-[#AECEFF] rounded-lg px-8 py-4">
+        <p class="text-center text-lg font-bold text-gray-900">
+            Belum Memiliki Podcast
+        </p>
+    </div>
+    {% else %}
+    <div class="bg-[#AECEFF] rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <caption class="p-4 text-lg font-bold text-center rtl:text-right text-gray-900 bg-[#AECEFF] dark:text-white dark:bg-gray-800">
+                Daftar Podcast
+            </caption>
+            <thead class="text-gray-700 font-bold uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Judul
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Jumlah Episode
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Total Durasi
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for podcast in podcasts %}
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {{ podcast.judul }}
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        {{ podcast.jumlah_episode }}
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        {{ podcast.total_durasi }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+    {% endif %}
+
+    {% if is_artist or is_songwriter %}
+    <div class="mt-4"></div>
+    {% if not songs %}
+    <div class="bg-[#AECEFF] rounded-lg px-8 py-4">
+        <p class="text-center text-lg font-bold text-gray-900">
+            Belum Memiliki Lagu
+        </p>
+    </div>
+    {% else %}
+    <div class="bg-[#AECEFF] rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <caption class="p-4 text-lg font-bold text-center rtl:text-right text-gray-900 bg-[#AECEFF] dark:text-white dark:bg-gray-800">
+                Daftar Lagu
+            </caption>
+            <thead class="text-gray-700 font-bold uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Judul
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Durasi
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Total Play
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Total Download
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for song in songs %}
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {{ song.judul }}
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        {{ song.durasi }}
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        {{ song.total_play }}
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        {{ song.total_download }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endif %}
+    {% endif %}
 </div>
 {% endblock content %}
