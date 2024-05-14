@@ -37,19 +37,13 @@ def royalti(request):
                     for j in range(len(songs)):
                         cursor.execute('SELECT judul FROM KONTEN WHERE id = %s', (songs[j][0],))
                         judul_lagu = cursor.fetchone()
-
-                        cursor.execute('SELECT count(*) FROM AKUN_PLAY_SONG WHERE id_song = %s', (songs[j][0],))
-                        total_play = cursor.fetchone()
-
-                        cursor.execute('SELECT count(*) FROM DOWNLOADED_SONG WHERE id_song = %s', (songs[j][0],))
-                        total_download = cursor.fetchone()
                         
                         royalti = {
                             'judul_lagu': judul_lagu[0],
                             'judul_album': albums[i][1],
-                            'total_play': total_play[0],
-                            'total_download': total_download[0],
-                            'total_royalti': total_play[0] * rate_royalti,
+                            'total_play': songs[j][3],
+                            'total_download': songs[j][4],
+                            'total_royalti': songs[j][3] * rate_royalti,
                         }
 
                         context['royalties'].append(royalti)
@@ -74,19 +68,13 @@ def royalti(request):
 
                     cursor.execute('SELECT judul FROM ALBUM WHERE id = %s', (songs[i][2],))
                     judul_album = cursor.fetchone()
-
-                    cursor.execute('SELECT count(*) FROM AKUN_PLAY_SONG WHERE id_song = %s', (songs[i][0],))
-                    total_play = cursor.fetchone()
-                    
-                    cursor.execute('SELECT count(*) FROM DOWNLOADED_SONG WHERE id_song = %s', (songs[i][0],))
-                    total_download = cursor.fetchone()
                     
                     royalti = {
                         'judul_lagu': judul_lagu[0],
                         'judul_album': judul_album[0],
-                        'total_play': total_play[0],
-                        'total_download': total_download[0],
-                        'total_royalti': total_play[0] * rate_royalti,
+                        'total_play': songs[i][3],
+                        'total_download': songs[i][4],
+                        'total_royalti': songs[i][3] * rate_royalti,
                     }
 
                     context['royalties'].append(royalti)

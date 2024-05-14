@@ -96,15 +96,12 @@ def view_album(request, id):
                 cursor.execute('SELECT judul, durasi FROM KONTEN WHERE id = %s', (songs[i][0],))
                 konten = cursor.fetchone()
 
-                cursor.execute('SELECT count(*) FROM DOWNLOADED_SONG WHERE id_song = %s', (songs[i][0],))
-                total_download = cursor.fetchone()
-
                 song = {
                     'id': songs[i][0],
                     'judul': konten[0],
                     'durasi': konten[1],
                     'total_play': songs[i][3],
-                    'total_download': total_download[0],
+                    'total_download': songs[i][4],
                 }
                 context['songs'].append(song)
 
