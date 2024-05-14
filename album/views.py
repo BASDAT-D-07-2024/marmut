@@ -1,4 +1,6 @@
+import uuid
 import psycopg2
+from datetime import date
 from django.contrib import messages
 from utils.db_utils import get_db_connection
 from django.shortcuts import render, redirect
@@ -112,3 +114,149 @@ def view_album(request, id):
                 cursor.close()
                 connection.close()
     return redirect('main:dashboard')
+
+def create_album(request):
+    if request.session.get('role') is None:
+        return redirect('authentication:login')
+    
+    role = request.session.get('role')
+    user = request.session.get('user')
+
+    if request.method == 'POST':
+        judul_album = request.POST.get('judul_album')
+        id_label = request.POST.get('label')
+        judul_lagu = request.POST.get('judul_lagu')
+        if 'artist' in role:
+            id_artist = request.POST.get('artist_id')
+        else:
+            id_artist = request.POST.getlist('artist')
+        id_songwriter = request.POST.getlist('songwriter')
+        genre = request.POST.getlist('genre')
+        durasi = request.POST.get('durasi')
+
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor()
+
+            id_album = uuid.uuid4()
+            cursor.execute('INSERT INTO ALBUM (id, judul, jumlah_lagu, id_label, total_durasi) VALUES (%s, %s, %s, %s, %s)', (id_album, judul_album, 1, id_label, durasi))
+            connection.commit()
+
+            id_konten = uuid.uuid4()
+            tanggal_rilis, tahun = today_date()
+            cursor.execute('INSERT INTO KONTEN (id, judul, tanggal_rilis, tahun, durasi) VALUES (%s, %s, %s, %s, %s)', (id_konten, judul_lagu, tanggal_rilis, tahun, durasi))
+            connection.commit()
+
+            cursor.execute('INSERT INTO SONG (id_konten, id_artist, id_album, total_play, total_download) VALUES (%s, %s, %s, %s, %s)', (id_konten, id_artist, id_album, 0, 0))
+            connection.commit()
+
+            for i in range(len(genre)):
+                cursor.execute('INSERT INTO GENRE (id_konten, genre) VALUES (%s, %s)', (id_konten, genre[i]))
+                connection.commit()
+
+            for i in range(len(id_songwriter)):
+                cursor.execute('INSERT INTO SONGWRITER_WRITE_SONG (id_songwriter, id_song) VALUES (%s, %s)', (id_songwriter[i], id_konten))
+                connection.commit()
+
+            messages.success(request, 'Album created successfully')
+            return redirect('album:list_album')
+        except psycopg2.Error as error:
+            messages.error(request, 'Error while inserting data to database')
+            return redirect('album:create_album')
+        finally:
+            if connection:
+                cursor.close()
+                connection.close()
+
+    context = {
+        'is_artist': 'artist' in role,
+        'is_songwriter': 'songwriter' in role,
+        'labels': [],
+        'artists': [],
+        'songwriters': [],
+        'genres': [],
+    }
+
+    if 'artist' in role or 'songwriter' in role:
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor()
+
+            # Get all labels
+            cursor.execute('SELECT * FROM LABEL')
+            labels = cursor.fetchall()
+
+            for i in range(len(labels)):
+                label = {
+                    'id': labels[i][0],
+                    'nama': labels[i][1],
+                }
+                context['labels'].append(label)
+            
+            # Get all artists
+            cursor.execute('SELECT * FROM SONGWRITER')
+            songwriter = cursor.fetchall()
+            
+            for i in range(len(songwriter)):
+                cursor.execute('SELECT nama FROM AKUN WHERE email = %s', (songwriter[i][1],))
+                nama = cursor.fetchone()
+                songwrite = {
+                    'id': songwriter[i][0],
+                    'nama': nama[0],
+                }
+                context['songwriters'].append(songwrite)
+            
+            # Get all songwriters
+            cursor.execute('SELECT * FROM ARTIST')
+            artist = cursor.fetchall()
+            
+            for i in range(len(artist)):
+                cursor.execute('SELECT nama FROM AKUN WHERE email = %s', (artist[i][1],))
+                nama = cursor.fetchone()
+                artis = {
+                    'id': artist[i][0],
+                    'nama': nama[0],
+                }
+                context['artists'].append(artis)
+
+            # Auto choose artist if the user is an artist
+            if 'artist' in role:
+                cursor.execute('SELECT * FROM ARTIST WHERE email_akun = %s', (user['email'],))
+                artist = cursor.fetchone()
+                context['artist'] = {
+                    'id': artist[0],
+                    'nama': user['nama'],
+                }
+
+            # Auto choose songwriter if the user is a songwriter
+            if 'songwriter' in role:
+                cursor.execute('SELECT * FROM SONGWRITER WHERE email_akun = %s', (user['email'],))
+                songwriter = cursor.fetchone()
+                context['songwriter'] = {
+                    'id': songwriter[0],
+                    'nama': user['nama'],
+                }
+            
+            # Get all genres
+            cursor.execute('SELECT DISTINCT on (genre) * FROM GENRE')
+            genres = cursor.fetchall()
+            for i in range(len(genres)):
+                genre = {
+                    'id': genres[i][0],
+                    'genre': genres[i][1],
+                }
+                context['genres'].append(genre)
+
+            return render(request, 'create-album.html', context)
+        except psycopg2.Error as error:
+            messages.error(request, 'Error while fetching data from database')
+            return render(request, 'create-album.html')
+        finally:
+            if connection:
+                cursor.close()
+                connection.close()
+    return redirect('main:dashboard')
+
+def today_date():
+    today = date.today()
+    return (today.strftime('%Y-%m-%d'), today.strftime('%Y'))
