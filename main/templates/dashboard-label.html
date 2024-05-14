@@ -18,6 +18,13 @@
         </div>
     </div>
     <div class="mt-4"></div>
+    {% if not albums %}
+    <div class="bg-[#AECEFF] rounded-lg px-8 py-4">
+        <p class="text-center text-lg font-bold text-gray-900">
+            Belum Memproduksi Album
+        </p>
+    </div>
+    {% else %}
     <div class="bg-[#AECEFF] rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <caption class="p-4 text-lg font-bold text-center rtl:text-right text-gray-900 bg-[#AECEFF] dark:text-white dark:bg-gray-800">
@@ -37,64 +44,22 @@
                 </tr>
             </thead>
             <tbody>
+                {% for album in albums %}
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Album A
+                        {{ album.judul }}
                     </th>
                     <td class="px-6 py-4 text-center">
-                        8
+                        {{ album.jumlah_lagu }}
                     </td>
                     <td class="px-6 py-4 text-center">
-                        24 menit
+                        {{ album.total_durasi }}
                     </td>
                 </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Album B
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        9
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        27 menit
-                    </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Album C
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        6
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        18 menit
-                    </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Album D
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        10
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        30 menit
-                    </td>
-                </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        Album E
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        7
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        21 menit
-                    </td>
-                </tr>
-                
+                {% endfor %}
             </tbody>
         </table>
     </div>
+    {% endif %}
 </div>
 {% endblock content %}
