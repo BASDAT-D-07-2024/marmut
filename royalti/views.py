@@ -6,8 +6,10 @@ from django.shortcuts import render, redirect
 def royalti(request):
     if request.session.get('role') is None:
         return redirect('authentication:login')
+    
     role = request.session.get('role')
     user = request.session.get('user')
+
     if 'label' in role or 'artist' in role or 'songwriter' in role:
         try:
             connection = get_db_connection()      
@@ -31,11 +33,14 @@ def royalti(request):
                 for i in range(len(albums)):
                     cursor.execute('SELECT * FROM SONG WHERE id_album = %s', (albums[i][0],))
                     songs = cursor.fetchall()
+
                     for j in range(len(songs)):
                         cursor.execute('SELECT judul FROM KONTEN WHERE id = %s', (songs[j][0],))
                         judul_lagu = cursor.fetchone()
+
                         cursor.execute('SELECT count(*) FROM AKUN_PLAY_SONG WHERE id_song = %s', (songs[j][0],))
                         total_play = cursor.fetchone()
+
                         cursor.execute('SELECT count(*) FROM DOWNLOADED_SONG WHERE id_song = %s', (songs[j][0],))
                         total_download = cursor.fetchone()
                         
@@ -48,6 +53,43 @@ def royalti(request):
                         }
 
                         context['royalties'].append(royalti)
+            elif 'artist' in role or 'songwriter' in role:
+                if 'artist' in role:
+                    cursor.execute('SELECT * FROM ARTIST WHERE email_akun = %s', (user['email'],))
+                    user = cursor.fetchone()
+                elif 'songwriter' in role:
+                    cursor.execute('SELECT * FROM SONGWRITER WHERE email_akun = %s', (user['email'],))
+                    user = cursor.fetchone()
+
+                cursor.execute('SELECT * FROM PEMILIK_HAK_CIPTA WHERE id = %s', (user[2],))
+                pemilik_hak_cipta = cursor.fetchone()
+                rate_royalti = pemilik_hak_cipta[1]
+
+                cursor.execute('SELECT * FROM SONG WHERE id_artist = %s', (user[0],))
+                songs = cursor.fetchall()
+
+                for i in range(len(songs)):
+                    cursor.execute('SELECT judul FROM KONTEN WHERE id = %s', (songs[i][0],))
+                    judul_lagu = cursor.fetchone()
+
+                    cursor.execute('SELECT judul FROM ALBUM WHERE id = %s', (songs[i][2],))
+                    judul_album = cursor.fetchone()
+
+                    cursor.execute('SELECT count(*) FROM AKUN_PLAY_SONG WHERE id_song = %s', (songs[i][0],))
+                    total_play = cursor.fetchone()
+                    
+                    cursor.execute('SELECT count(*) FROM DOWNLOADED_SONG WHERE id_song = %s', (songs[i][0],))
+                    total_download = cursor.fetchone()
+                    
+                    royalti = {
+                        'judul_lagu': judul_lagu[0],
+                        'judul_album': judul_album[0],
+                        'total_play': total_play[0],
+                        'total_download': total_download[0],
+                        'total_royalti': total_play[0] * rate_royalti,
+                    }
+
+                    context['royalties'].append(royalti)
 
             return render(request, 'list-royalti.html', context)
         except psycopg2.Error as e:
