@@ -4,6 +4,6 @@ from chart.views import *
 app_name = 'chart'
 
 urlpatterns = [
-    path('list/', chart_list, name='chart_list'),
-    path('detail/', chart_detail, name='chart_detail'),
+    path('', chart_list, name='chart_list'),
+    path('<str:id>/', chart_detail, name='chart_detail'),
 ]
