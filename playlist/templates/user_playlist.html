@@ -2,188 +2,121 @@
 {% load static %}
 
 {% block content %}
-<style>
-    body {
-        font-family: 'Lexend', sans-serif;
-        margin: 0;
-        padding: 0;
-        background: white;
-    }
-
-    .header {
-        padding: 12px 60px;
-        background: #AECEFF;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-
-    .action-buttons {
-    display: flex; /* Mengaktifkan flexbox */
-    justify-content: space-around; /* Menyebarkan item secara merata di sepanjang sumbu utama */
-    align-items: center; /* Menengahkan item secara vertikal */
-    }
-
-    .control-button {
-        padding: 5px 10px; /* Padding untuk tombol */
-        margin: 2px; /* Margin kecil di sekitar tombol */
-        background: #007BFF; /* Warna latar belakang default */
-        color: white; /* Warna teks */
-        text-decoration: none; /* Menghilangkan garis bawah teks */
-        border-radius: 5px; /* Membulatkan sudut tombol */
-        font-size: 14px; /* Ukuran font */
-    }
-
-    .warning-button {
-        background: #DC7474;
-        color: white;
-        padding: 12px 20px;
-        border-radius: 12px;
-        font-size: 16px;
-        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
-    }
-
-    .primary-button {
-        background: #5781C4;
-        color: white;
-        padding: 12px 20px;
-        border-radius: 12px;
-        font-size: 16px;
-        font-weight: 600;
-        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
-    }
-
-    .secondary-button {
-        background: #8B9BB5;
-        color: white;
-        padding: 12px 20px;
-        border-radius: 12px;
-        font-size: 16px;
-    }
-
-    h1 {
-        font-size: 32px;
-        font-family: 'Urbanist', sans-serif;
-        font-weight: 800;
-        color: #443642;
-    }
-
-    .menu-item {
-        color: #1A2223;
-        font-size: 20px;
-        font-weight: 600;
-    }
-
-    .page-container {
-        max-width: 1440px;
-        margin: auto;
-        position: relative;
-        padding-top: 60px;
-    }
-
-    .content {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .info, .playlist-details {
-        text-align: center;
-    }
-
-    .song-info {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-        padding: 10px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        margin-top: 10px;
-    }
-
-
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    th, td {
-        text-align: left;
-        padding: 20px;
-        border-bottom: 1px solid #ddd;
-    }
-</style>
-
-    <div class="content">
-        <h1>Playlist 1</h1>
-        <p>Lorem ipsum dolor sit amet</p>
-        <div>@username - 37 songs, 2 hr 35 min</div>
-
-        <div class="control-button primary-button">Shuffle Play</div>
-
-        <table>
-            <thead>
-                <tr>
-                    <th>Judul</th>
-                    <th>Penyanyi</th>
-                    <th>Durasi</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
+<div class="p-16">
+    <div class="overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <caption class="p-5 text-lg font-semibold text-center text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+                User Playlist Detail
+            </caption>
             <tbody>
                 <tr>
-                    <td>Song 1</td>
-                    <td>Artist 1</td>
-                    <td>3:29</td>
-                    <td>
-                        <a class="control-button primary-button">Details</a>
-                        <a class="control-button secondary-button">Edit</a>
-                        <a class="control-button warning-button">Delete</a>
-                    </td>
+                    <td class="px-6 py-4 font-medium">Judul:</td>
+                    <td class="px-6 py-4">{{ playlist.title }}</td>
                 </tr>
                 <tr>
-                    <td>Song 2</td>
-                    <td>Artist 2</td>
-                    <td>4:28</td>
-                    <td>
-                        <a class="control-button primary-button">Details</a>
-                        <a class="control-button secondary-button">Edit</a>
-                        <a class="control-button warning-button">Delete</a>
-                    </td>
+                    <td class="px-6 py-4 font-medium">Pembuat:</td>
+                    <td class="px-6 py-4">{{ playlist.creator }}</td>
                 </tr>
                 <tr>
-                    <td>Song 3</td>
-                    <td>Artist 3</td>
-                    <td>2:29</td>
-                    <td>
-                        <a class="control-button primary-button">Details</a>
-                        <a class="control-button secondary-button">Edit</a>
-                        <a class="control-button warning-button">Delete</a>
-                    </td>
+                    <td class="px-6 py-4 font-medium">Jumlah Lagu:</td>
+                    <td class="px-6 py-4">{{ playlist.song_count }}</td>
                 </tr>
                 <tr>
-                    <td>Song 4</td>
-                    <td>Artist 4</td>
-                    <td>7:20</td>
-                    <td>
-                        <a class="control-button primary-button">Details</a>
-                        <a class="control-button secondary-button">Edit</a>
-                        <a class="control-button warning-button">Delete</a>
-                    </td>
+                    <td class="px-6 py-4 font-medium">Total Durasi:</td>
+                    <td class="px-6 py-4">{{ playlist.total_duration }}</td>
                 </tr>
                 <tr>
-                    <td>Song 5</td>
-                    <td>Artist 5</td>
-                    <td>1:43</td>
-                    <td>
-                        <a class="control-button primary-button">Details</a>
-                        <a class="control-button secondary-button">Edit</a>
-                        <a class="control-button warning-button">Delete</a>
+                    <td class="px-6 py-4 font-medium">Tanggal Dibuat:</td>
+                    <td class="px-6 py-4">{{ playlist.created_date|date:"d/m/Y" }}</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 font-medium">Deskripsi:</td>
+                    <td class="px-6 py-4">{{ playlist.description }}</td>
+                </tr>
+                <tr>
+                    <td colspan="4" class="text-center p-4">
+                        <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Shuffle Play</a>
+                        <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline ml-4">Kembali</a>
                     </td>
                 </tr>
             </tbody>
         </table>
-
-        <div class="control-button primary-button">Tambah Lagu</div>
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <caption class="p-5 text-lg font-bold text-center rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+                Daftar Lagu
+            </caption>
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Judul
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Oleh
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Durasi
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for song in songs %}
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        {{ song.judul }}
+                    </th>
+                    <td class="px-6 py-4 text-center">
+                        {{ song.nama_artis }}
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        {{ song.durasi }} menit
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <a href="{% url 'song:show_song' %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline ms-3">Lihat</a>
+                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline ms-3">Play</a>
+                        <button class="font-medium text-red-600 hover:underline" data-url="{% url 'playlist:delete_song' song.id %}" onclick="deleteSong(this)">Delete</button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4" class="text-center p-4">
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
     </div>
 </div>
+
+<script>
+    function deleteSong(button) {
+        const url = button.getAttribute('data-url');
+
+        if (confirm('Are you sure you want to delete this song?')) {
+            fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json',
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // If the delete is successful, remove the row from the table
+                    button.closest('tr').remove();
+                } else {
+                    alert('Failed to delete the song.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while deleting the song.');
+            });
+        }
+    }
+</script>
+
 {% endblock content %}
