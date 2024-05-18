@@ -86,7 +86,6 @@ def create_podcast(request):
     if request.method == 'POST':
         judul_podcast = request.POST.get('judul_podcast')
         genre = request.POST.getlist('genre')
-        durasi = request.POST.get('durasi')
 
         try:
             connection = get_db_connection()
@@ -94,7 +93,7 @@ def create_podcast(request):
 
             id_podcast = uuid.uuid4()
             tanggal_rilis, tahun = today_date()
-            cursor.execute('INSERT INTO KONTEN (id, judul, tanggal_rilis, tahun, durasi) VALUES (%s, %s, %s, %s, %s)', (id_podcast, judul_podcast, tanggal_rilis, tahun, durasi))
+            cursor.execute('INSERT INTO KONTEN (id, judul, tanggal_rilis, tahun, durasi) VALUES (%s, %s, %s, %s, %s)', (id_podcast, judul_podcast, tanggal_rilis, tahun, 0))
             connection.commit()
 
             cursor.execute('INSERT INTO PODCAST (id_konten, email_podcaster) VALUES (%s, %s)', (id_podcast, user['email']))
@@ -317,13 +316,13 @@ def delete_ep(request, id_episode):
             connection = get_db_connection()
             cursor = connection.cursor()
 
-            cursor.execute('SELECT * FROM EPISODE WHERE id = %s', (id_episode,))
+            cursor.execute('SELECT * FROM EPISODE WHERE id_episode = %s', (id_episode,))
             episode = cursor.fetchone()
 
             if episode is None:
                 return JsonResponse({'message': 'Episode not found'}, status=404)
             else:
-                cursor.execute('DELETE FROM EPISODE WHERE id = %s', (id_episode,))
+                cursor.execute('DELETE FROM EPISODE WHERE id_episode = %s', (id_episode,))
                 connection.commit()
 
             return JsonResponse({'message': 'Episode deleted successfully'}, status=200)
