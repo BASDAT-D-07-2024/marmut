@@ -69,6 +69,28 @@ def chart_detail(request, id):
             if chart:
                 context['nama'] = chart[0]
 
+                # Fetch the top 20 songs based on the chart type
+                if context['nama'] == 'Daily Top 20':
+                    cursor.execute("SELECT * FROM SONG s JOIN KONTEN k ON s.id_konten = k.id WHERE k.tanggal_rilis >= CURRENT_DATE - INTERVAL '1 day' AND s.total_play > 0 ORDER BY s.total_play DESC LIMIT 20")
+                    top_20 = cursor.fetchall()
+                elif context['nama'] == 'Weekly Top 20':
+                    cursor.execute("SELECT * FROM SONG s JOIN KONTEN k ON s.id_konten = k.id WHERE k.tanggal_rilis >= CURRENT_DATE - INTERVAL '1 week' AND s.total_play > 0 ORDER BY s.total_play DESC LIMIT 20")
+                    top_20 = cursor.fetchall()
+                elif context['nama'] == 'Monthly Top 20':
+                    cursor.execute("SELECT * FROM SONG s JOIN KONTEN k ON s.id_konten = k.id WHERE k.tanggal_rilis >= CURRENT_DATE - INTERVAL '1 month' AND s.total_play > 0 ORDER BY s.total_play DESC LIMIT 20")
+                    top_20 = cursor.fetchall()
+                elif context['nama'] == 'Yearly Top 20':
+                    cursor.execute("SELECT * FROM SONG s JOIN KONTEN k ON s.id_konten = k.id WHERE k.tanggal_rilis >= CURRENT_DATE - INTERVAL '1 year' AND s.total_play > 0 ORDER BY s.total_play DESC LIMIT 20")
+                    top_20 = cursor.fetchall()
+                
+                # Update the playlist songs
+                cursor.execute('DELETE FROM PLAYLIST_SONG WHERE id_playlist = %s', (id,))
+                connection.commit()
+
+                for songs in top_20:
+                    cursor.execute('INSERT INTO PLAYLIST_SONG (id_playlist, id_song) VALUES (%s, %s)', (id, songs[0]))
+                    connection.commit()
+
                 # Fetch the songs in the playlist
                 cursor.execute('SELECT * FROM PLAYLIST_SONG WHERE id_playlist = %s', (id,))
                 songs_id = cursor.fetchall()
