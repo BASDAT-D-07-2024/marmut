@@ -8,6 +8,7 @@
             background-color: #AECEFF;
             margin: 0;
             padding: 0;
+            height: 100vh;
         }
 
         header {
@@ -30,8 +31,10 @@
         }
 
         h2 {
-            color: #1D4F9D;
+            color: #000000;
             font-size: 36px;
+            text-align: center;
+            font-weight: bold;
         }
 
         table {
@@ -63,7 +66,7 @@
             text-align: center;
         }
 
-        #create_podcast {
+        #create_podcast, #back {
             background-color: #1D4F9D;
             color: #FFFFFF;
             border: none;
@@ -89,18 +92,10 @@
 </head>
 <body>
 
-<!-- Navbar -->
-<nav>
-    <!-- Your navbar code goes here -->
-</nav>
-
 <!-- Main Content -->
 <main>
     <section>
         <h2>Podcast List</h2>
-        <div class="button-container">
-            <button onclick="goBack()">Kembali</button>
-        </div>
         <table>
             <thead>
                 <tr>
@@ -129,6 +124,9 @@
     
     <div class="button-container">
         <button id = "create_podcast" onclick="location.href='create-podcast';">Create Podcast</button>
+    </div>
+    <div class="button-container">
+        <button id="back" onclick="goBack()">Kembali</button>
     </div>
 </main>
 

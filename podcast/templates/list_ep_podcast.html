@@ -8,6 +8,7 @@
             background-color: #AECEFF;
             margin: 0;
             padding: 0;
+            height: 100vh;
         }
 
         header {
@@ -69,6 +70,15 @@
         .action-link:hover {
             text-decoration: underline;
         }
+
+        #back {
+            background-color: #1D4F9D;
+            color: #FFFFFF;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -82,9 +92,6 @@
 <main>
     <section>
         <h2>Episode List</h2>
-        <div class="button-container">
-            <button onclick="goBack()">Kembali</button>
-        </div>
         <table>
             <thead>
                 <tr>
@@ -109,6 +116,9 @@
                 {% endfor %}
             </tbody>
         </table>
+        <div class="button-container">
+            <button id="back" onclick="goBack()">Kembali</button>
+        </div>
     </section>
 </main>
 
