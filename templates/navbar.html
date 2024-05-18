@@ -1,6 +1,6 @@
 {% load static %}
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-<nav :class="{'flex': open, 'hidden': !open}" class="flex flex-col max-w-screen-xl px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8 bg-[#AECEFF] sticky top-0 w-full">
+<nav :class="{'flex': open, 'hidden': !open}" class="flex flex-col max-w-screen px-4 mx-auto md:items-center md:justify-between md:flex-row md:px-6 lg:px-8 bg-[#AECEFF] sticky top-0 w-full">
   <div class="p-4 flex flex-row items-center justify-between">
     <img src="{% static 'images/marmut.png' %}" class="h-8" alt="Marmut Logo">
     {% if 'Guest' in role %}
