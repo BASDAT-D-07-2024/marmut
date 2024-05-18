@@ -11,7 +11,6 @@ channels
 channels-redis
 daphne
 sqlalchemy
-
 pandas
 django-environ
 django-cors-headers
