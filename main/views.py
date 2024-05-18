@@ -44,6 +44,7 @@ def dashboard(request):
                     'total_durasi': albums[i][4],
                 }
                 context['albums'].append(album)
+            return render(request, 'dashboard-label.html', context)
         else:
             roles_capitalized = [role.capitalize() for role in role]
             roles_string = ', '.join(roles_capitalized)
