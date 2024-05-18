@@ -3,8 +3,8 @@ from utils.db_utils import get_db_connection
 from django.shortcuts import render, redirect
 
 def dashboard(request):
-    # if request.session.get('role') is None:
-    #     return redirect('authentication:login')
+    if request.session.get('role') is None:
+        return redirect('authentication:login')
     
     role = request.session.get('role')
     user = request.session.get('user')

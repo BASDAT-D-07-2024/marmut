@@ -114,20 +114,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Judul Lagu 1</td>
-                    <td>Nama Artist 1</td>
-                    <td>1 Januari 2024</td>
-                    <td>100</td>
-                    <td><button onclick="viewSongDetails()">Lihat</button></td>
-                </tr>
-                <tr>
-                    <td>Judul Lagu 2</td>
-                    <td>Nama Artist 2</td>
-                    <td>2 Januari 2024</td>
-                    <td>90</td>
-                    <td><button onclick="viewSongDetails()">Lihat</button></td>
-                </tr>
+                {% for song in songs_id %}
+                    <tr>
+                        <td>{{ song.judul }}</td>
+                        <td>{{ song.artis }}</td>
+                        <td>{{ song.tanggal_rilis }}4</td>
+                        <td>{{ song.total_play }} menit</td>
+                        <td><button onclick="viewSongDetails()">Lihat</button></td>
+                    </tr>
+                {% endfor %}
                 <!-- Add more songs as needed -->
             </tbody>
         </table>

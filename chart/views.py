@@ -36,10 +36,10 @@ def chart_list(request):
                 }
                 context['charts'].append(chart)
 
-            return render(request, 'list-chart.html', context)
+            return render(request, 'chart_list.html', context)
         except psycopg2.Error as error:
             messages.error(request, 'Error while fetching data from database')
-            return render(request, 'list-chart.html')
+            return render(request, 'chart_list.html')
         finally:
             if connection:
                 cursor.close()
