@@ -4,6 +4,7 @@ python3.9 get-pip.py
 PYTHON_PATH=/usr/bin/python3.9
 
 # Install dependencies
+$PYTHON_PATH -m pip install --upgrade setuptools
 $PYTHON_PATH -m pip install -r requirements.txt
 
 # Jalankan migrasi dan kumpulkan static files
