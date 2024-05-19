@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponse
 from django.contrib import messages
+import psycopg2
 from playlist.views import *
 from authentication.views import is_premium
 from utils.db_utils import get_db_connection
@@ -224,10 +225,10 @@ def add_song(request, playlist_id):
                 """, (str(playlist_id), selected_song_id))
             connection.commit()
             messages.success(request, "Song added successfully to the playlist.")
-        except UniqueViolation as e:
+        except psycopg2.Error as e:
             print(e)
             connection.rollback()  # Rollback the transaction on error
-            messages.error(request, "This song is already in the playlist.")
+            messages.error(request, str(e).splitlines()[0])
         except Exception as e:
             print(e)
             connection.rollback()  # Rollback the transaction on error
@@ -392,10 +393,10 @@ def add_to_playlist_from_song(request, song_id):
                 """, (str(playlist_id), song_id))
             connection.commit()
             messages.success(request, "Song added successfully to the playlist.")
-        except UniqueViolation as e:
+        except psycopg2.Error as e:
             print(e)
             connection.rollback()  # Rollback the transaction on error
-            messages.error(request, "This song is already in the playlist.")
+            messages.error(request, str(e).splitlines()[0])
         except Exception as e:
             print(e)
             connection.rollback()  # Rollback the transaction on error
