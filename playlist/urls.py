@@ -15,6 +15,7 @@ urlpatterns = [
     path('add_to_playlist_from_song/<uuid:song_id>', add_to_playlist_from_song, name='add_to_playlist_from_song'),
     path('play_playlist/<uuid:id_user_playlist>', play_playlist, name='play_playlist'),
     path('view_song/<uuid:playlist_id>/<uuid:song_id>', view_song, name='view_song'),
+    path('add_to_download/<uuid:song_id>', add_to_download, name='add_to_download'),
     
     path('/', show_playlist, name='show_playlist'),
     path('create_playlist/', create_playlist, name='create_playlist'),
@@ -27,4 +28,5 @@ urlpatterns = [
     path('add_to_playlist_from_song/<uuid:song_id>/', add_to_playlist_from_song, name='add_to_playlist_from_song'),
     path('play_playlist/<uuid:id_user_playlist>/', play_playlist, name='play_playlist'),
     path('view_song/<uuid:playlist_id>/<uuid:song_id>/', view_song, name='view_song'),
+    path('add_to_download/<uuid:song_id>/', add_to_download, name='add_to_download'),
 ]

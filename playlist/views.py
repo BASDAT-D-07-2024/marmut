@@ -113,8 +113,6 @@ def user_playlist(request, playlist_id):
                     "durasi": item[9]
                 }
                 context["songs"].append(song_info)
-    
-    print(context)
 
     return render(request, "user_playlist.html", context)
 
@@ -269,7 +267,6 @@ def create_playlist(request):
     if request.method == 'POST':
         judul = request.POST.get('judul')
         deskripsi = request.POST.get('deskripsi')
-        print(judul, deskripsi)
 
         id_playlist = str(uuid.uuid4())
         current_datetime = datetime.now()
@@ -450,3 +447,38 @@ def add_to_playlist_from_song(request, song_id):
     context['playlists'] = playlists
     
     return render(request, 'add_to_playlist_from_song.html', context)
+
+def add_to_download(request, song_id):
+    if request.session.get('role') is None:
+        return redirect('authentication:login')
+    
+    role = request.session.get('role')
+    user = request.session.get('user')
+
+    if 'premium' in role:
+        try:
+            connection = get_db_connection()
+            cursor = connection.cursor()
+            email_downloader = user['email']
+            print('sebelum insert')
+            cursor.execute(f"""
+                INSERT INTO DOWNLOADED_SONG (email_downloader, id_song)
+                VALUES ('{email_downloader}', '{song_id}');
+            """)
+            connection.commit()
+            print('masuk insert')
+            messages.success(request, 'Song has been downloaded successfully.')
+            return redirect('playlist:show_playlist')
+        except psycopg2.Error as e:
+            print(e)
+            connection.rollback()
+            messages.error(request, str(e).splitlines()[0])
+            return redirect('playlist:show_playlist')
+        except Exception as e:
+            print(e)
+            connection.rollback()
+            messages.error(request, 'An unexpected error occurred.')
+        finally:
+            cursor.close()
+            connection.close()
+    return redirect('main:dashboard')
