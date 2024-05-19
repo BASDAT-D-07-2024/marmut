@@ -8,6 +8,7 @@
             background-color: #AECEFF;
             margin: 0;
             padding: 0;
+            height: 100vh;
         }
 
         header {
@@ -26,12 +27,14 @@
             border-radius: 8px;
             padding: 20px;
             margin-bottom: 20px;
+            height: fit-content;
         }
 
         h1 {
             color: #1D4F9D;
             text-align: center;
             margin-bottom: 20px;
+            font-size: 36px;
         }
 
         form {
@@ -54,8 +57,8 @@
         }
 
         button {
-            background-color: #1D4F9D;
-            color: #FFFFFF;
+            background-color: #ffffff;
+            color: #000000;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
@@ -74,6 +77,18 @@
         .checkbox-group label {
             margin-right: 20px;
         }
+
+        #durasi{
+            background-color: #FFFFFF;
+        }
+
+        #judul_podcast{
+            background-color: #FFFFFF;
+        }
+
+        #genre{
+            background-color: #FFFFFF;
+        }
     </style>
 </head>
 <body>
@@ -87,27 +102,58 @@
 <main>
     <section>
         <h1>Marmut Podcast Management</h1>
-        <form>
-            <label for="podcast_title">Podcast Title:</label>
-            <input type="text" id="podcast_title" name="podcast_title" required>
-            <br>
-            <label>Genre:</label>
-            <div class="checkbox-group">
-                <input type="checkbox" id="genre1" name="genre1" value="Genre1">
-                <label for="genre1"> Genre1</label>
-                <input type="checkbox" id="genre2" name="genre2" value="Genre2">
-                <label for="genre2"> Genre2</label>
-                <input type="checkbox" id="genre3" name="genre3" value="Genre3">
-                <label for="genre3"> Genre3</label>
+        <form method="post">
+            {% csrf_token %}
+            <div> 
+                <label for="judul_podcast">Podcast Title:</label>
+                <input type="text" id="judul_podcast" name="judul_podcast" required>
+            </div>
+            <div>
+                <label for="genre">Genre:</label>
+                <select id="genre" name="genre" multiple class required>
+                    {% for g in genres %}
+                    <option value="{{ g.genre }}">{{ g.genre }}</option>
+                    {% endfor %}
+                </select>
             </div>
             <br>
-            <label for="duration">Duration (minutes):</label>
-            <input type="text" id="duration" name="duration" required>
-
             <button type="submit">Submit</button>
+            
+            <button onclick="goBack()">Kembali</button>
         </form>
     </section>
 </main>
 
 </body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Initialize Select2 for genre
+        $('#genre').select2();
+
+        // Handle change event for genre
+        $('#genre').on('change', function() {
+            let selectedValues = $(this).val();
+            updateChips('#genre', selectedValues);
+        });
+
+        // Function to update chips for selected values
+        function updateChips(selector, values) {
+            let chipContainer = $(selector).closest('.flex').find('.chip-container');
+            chipContainer.empty();
+            if (values) {
+                values.forEach(function(value) {
+                chipContainer.append(`<div class="chip" id=${value}>${value}</div>`);
+                });
+            }
+        }
+
+    });
+
+    function goBack() {
+        window.history.back();
+    }
+</script>
 {% endblock content %}

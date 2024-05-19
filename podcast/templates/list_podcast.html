@@ -8,6 +8,7 @@
             background-color: #AECEFF;
             margin: 0;
             padding: 0;
+            height: 100vh;
         }
 
         header {
@@ -30,8 +31,10 @@
         }
 
         h2 {
-            color: #1D4F9D;
+            color: #000000;
             font-size: 36px;
+            text-align: center;
+            font-weight: bold;
         }
 
         table {
@@ -63,7 +66,7 @@
             text-align: center;
         }
 
-        button {
+        #create_podcast, #back {
             background-color: #1D4F9D;
             color: #FFFFFF;
             border: none;
@@ -81,14 +84,13 @@
             color: #1D4F9D;
             text-decoration: none;
         }
+
+        #delete_button{
+            background-color: #FFFFFF;
+        }
     </style>
 </head>
 <body>
-
-<!-- Navbar -->
-<nav>
-    <!-- Your navbar code goes here -->
-</nav>
 
 <!-- Main Content -->
 <main>
@@ -104,35 +106,60 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Podcast 1</td>
-                    <td>5</td>
-                    <td>120 minutes</td>
-                    <td>
-                        <a href="#" class="action-link">Lihat Daftar Episode</a>
-                        <a href="#" class="action-link">Tambah Episode</a>
-                        <a href="#" class="action-link">Hapus</a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Podcast 2</td>
-                    <td>10</td>
-                    <td>180 minutes</td>
-                    <td>
-                        <a href="#" class="action-link">Lihat Daftar Episode</a>
-                        <a href="#" class="action-link">Tambah Episode</a>
-                        <a href="#" class="action-link">Hapus</a>
-                    </td>
-                </tr>
-                <!-- Add more podcasts as needed -->
+                {% for podcast in konten %}
+                    <tr>
+                        <td>{{ podcast.judul }}</td>
+                        <td>{{ podcast.jumlah_episode }}</td>
+                        <td>{{ podcast.total_durasi }}</td>
+                        <td>
+                            <a href="{% url 'podcast:list_ep_podcast' podcast.id %}">Lihat Daftar Episode</a>
+                            <a href="{% url 'podcast:create_ep_podcast' podcast.id %}" class="action-link">Tambah Episode</a>
+                            <button id="delete-button" style="color:red" data-url="{% url 'podcast:delete_podcast' podcast.id %}" onclick="deletePodcast(this)">Remove</button>
+                        </td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </section>
     
     <div class="button-container">
-        <button onclick="location.href='create_podcast.html';">Create Podcast</button>
+        <button id = "create_podcast" onclick="location.href='create-podcast';">Create Podcast</button>
+    </div>
+    <div class="button-container">
+        <button id="back" onclick="goBack()">Kembali</button>
     </div>
 </main>
 
 </body>
+
+<script>
+    function deletePodcast(button) {
+        const url = button.getAttribute('data-url');
+        
+        if (confirm('Are you sure you want to delete this podcast?')) {
+            fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json',
+                },
+            })
+            .then(response => {
+                if (response.ok) {
+                    // If the delete is successful, remove the row from the table
+                    const row = button.closest('tr');
+                    row.remove();
+                } else {
+                    alert('Failed to delete the podcast');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    }
+
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
 {% endblock content %}

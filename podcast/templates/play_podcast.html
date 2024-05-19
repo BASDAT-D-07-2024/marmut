@@ -9,6 +9,7 @@
             background-color: #AECEFF;
             margin: 0;
             padding: 0;
+            height: 100vh;
         }
 
         header {
@@ -96,12 +97,17 @@
 <main>
     <section id="podcast-info">
         <h1>Podcast Detail</h1>
-        <p><strong>Judul:</strong> Nama Podcast</p>
-        <p><strong>Genre:</strong> Genre Podcast</p>
-        <p><strong>Nama Podcaster:</strong> Nama Podcaster</p>
-        <p><strong>Durasi Total Podcast:</strong> 1 jam 30 menit</p>
-        <p><strong>Tanggal Rilis:</strong> 1 Januari 2024</p>
-        <p><strong>Tahun:</strong> 2024</p>
+        <h2>{{ podcasts.judul_podcast }}</h2>
+        <div>
+            <p>Genre(s):</p>
+            {% for g in genres %}
+                <li>{{ g.genre }}</li>
+            {% endfor %}
+        </div>
+        <p><strong>Podcaster:</strong> {{ nama }}</p>
+        <p><strong>Tanggal Rilis:</strong> {{ podcasts.tanggal_rilis }}</p>
+        <p><strong>Tahun:</strong> {{ podcasts.tahun }}</p>
+        <p><strong>Total Durasi:</strong> {{ podcasts.durasi }}</p>
         <div class="button-container">
             <button onclick="goBack()">Kembali</button>
         </div>
@@ -119,19 +125,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>Judul Episode</td>
-                    <td>Deskripsi Episode</td>
-                    <td>45 menit</td>
-                    <td>5 Februari 2024</td>
-                </tr>
-                <tr>
-                    <td>Judul Episode</td>
-                    <td>Deskripsi Episode</td>
-                    <td>1 jam 15 menit</td>
-                    <td>12 Februari 2024</td>
-                </tr>
-                <!-- Add more episodes as needed -->
+                {% for episode in episodes %}
+                    <tr>
+                        <td>{{ episode.subjudul }}</td>
+                        <td>{{ episode.deskripsi }}</td>
+                        <td>{{ episode.durasi }}</td>
+                        <td>{{ episode.tanggal }}</td>
+                    </tr>
+                {% endfor %}
             </tbody>
         </table>
     </section>

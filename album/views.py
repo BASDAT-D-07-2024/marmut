@@ -394,7 +394,7 @@ def fetch_data_for_create_song(role, user):
                 }
             
             # Get all genres
-            cursor.execute('SELECT DISTINCT on (genre) * FROM GENRE')
+            cursor.execute('SELECT DISTINCT on (g.genre) * FROM GENRE g JOIN KONTEN k ON g.id_konten = k.id LEFT JOIN PODCAST p ON k.id = p.id_konten WHERE p.id_konten IS NULL')
             genres = cursor.fetchall()
             for i in range(len(genres)):
                 genre = {

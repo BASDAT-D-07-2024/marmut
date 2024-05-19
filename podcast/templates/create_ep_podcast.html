@@ -8,6 +8,7 @@
             background-color: #AECEFF;
             margin: 0;
             padding: 0;
+            height: 100vh;
         }
 
         header {
@@ -55,8 +56,8 @@
         }
 
         button {
-            background-color: #1D4F9D;
-            color: #FFFFFF;
+            background-color: #ffffff;
+            color: #000000;
             border: none;
             padding: 10px 20px;
             border-radius: 5px;
@@ -65,6 +66,15 @@
 
         button:hover {
             background-color: #3C6EB4;
+        }
+
+        #deskripsi, #judul_ep, #durasi{
+            background-color: #FFFFFF;
+        }
+
+        #durasi {
+            border: 1px solid #d9d9d9;
+            border-radius: 5px;
         }
     </style>
 </head>
@@ -79,22 +89,37 @@
 <main>
     <section>
         <h1>Create Episode</h1>
-        <form>
-            <label for="podcast">Podcast: Podcast1</label>
-
-            <label for="episode_title">Judul:</label>
-            <input type="text" id="episode_title" name="episode_title" required>
-
-            <label for="episode_description">Deskripsi:</label>
-            <input type="text" id="episode_description" name="episode_description" required>
-
-            <label for="duration">Durasi (minutes):</label>
-            <input type="text" id="duration" name="duration" required>
-
+        <form method="post">
+            {% csrf_token %}
+            <div> 
+                <label for="podcast">Podcast: {{ judul_podcast.judul }}</label>
+            </div>
+            <br>
+            <div> 
+                <label for="judul_ep">Judul: </label>
+                <input type="text" id="judul_ep" name="judul_ep" required>
+            </div>
+            <div> 
+                <label for="deskripsi">Deskripsi: </label>
+                <input type="text" id="deskripsi" name="deskripsi" required>
+            </div>
+            <div>
+                <label for="durasi">Durasi (minutes):</label>
+                <input type="number" id="durasi" name="durasi" required>
+            </div>
+            <br>
             <button type="submit">Submit</button>
+            
+            <button onclick="goBack()">Kembali</button>
         </form>
     </section>
 </main>
 
 </body>
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
 {% endblock content %}
