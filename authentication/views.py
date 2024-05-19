@@ -181,7 +181,6 @@ def logout(request):
 def extract_user_data(user):
     gender = 'Laki-laki' if user[3] == 1 else 'Perempuan'
     x = user[5]
-    locale.setlocale(locale.LC_ALL, 'id_ID')
     tanggal_lahir = f'{x.strftime("%d")} {x.strftime("%B")} {x.strftime("%Y")}'
     return {
         'email': user[0],
