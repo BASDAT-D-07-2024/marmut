@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-16">
+
+    <div class="w-full p-6 mb-8 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+        <h5 class="text-xl text-center font-bold tracking-tight text-gray-900 dark:text-white mb-4">Pembayaran Paket</h5>
+        <p class="text-sm font-semibold mb-2">Informasi Paket yang Ingin Dibeli:</p>
+        <table class="w-full text-md text-left rtl:text-right text-gray-500 dark:text-gray-400 mb-4">
+            <thead class="text-md text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-8 py-4 text-center">Jenis</th>
+                    <th scope="col" class="px-8 py-4 text-center">Harga</th>
+                </tr>
+            </thead>
+            <tbody class="text-sm">
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td scope="row" class="px-8 py-6 text-center font-bold text-gray-900 whitespace-nowrap dark:text-white">{{ jenis }}</td>
+                    <td class="px-8 py-6 text-center font-bold">{{ harga }}</td>
+                </tr>
+            </tbody>
+        </table>        
+        <form method="post" class="w-full flex flex-col gap-4">
+            {% csrf_token %}
+            <input type="hidden" id="jenis_paket" name="jenis_paket" value="{{ jenis }}">
+            <input type="hidden" id="nominal" name="nominal" value="{{ harga }}">
+
+            <div class="flex flex-wrap mb-4">
+                <label for="metode_pembayaran" class="text-lg font-bold text-gray-900 dark:text-gray-200 mb-2">Metode Pembayaran</label>
+                <select id="metode_pembayaran" name="metode_pembayaran" class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                    <option value="Transfer Bank">Transfer Bank</option>
+                    <option value="Karu Kredit">Karu Kredit</option>
+                    <option value="E-Wallet">E-Wallet</option>
+                </select>
+            </div>
+
+            <button type="submit" class="bg-[#5781C4] hover:bg-[#749DDC] text-white font-medium py-2 px-4 rounded-md shadow-sm mt-2">
+              <span class="justify-center">
+                <span class="ml-2">Submit</span>
+              </span>
+            </button>
+        </form>
+        {% if messages %}
+        {% for message in messages %}
+        <div class="{% if message.tags == 'success' %}text-green-800{% elif message.tags == 'error' %}text-red-500{% endif %} text-center font-medium mt-2">
+            <p>{{ message }}</p>
+        </div>
+        {% endfor %}
+        {% endif %}
+    </div>
+
+</div>
+{% endblock content %}

@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="px-16 py-8">
+    <div class="overflow-x-auto shadow-md sm:rounded-lg mb-8">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <caption class="p-5 text-lg font-bold text-center rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+                Riwayat Transaksi Paket
+            </caption>
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Jenis
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Tanggal Dimulai
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Tanggal Berakhir
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Metode Pembayaran
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Nominal
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ transaction.jenis_paket }}
+                        </th>
+                        <td class="px-6 py-4 text-center">
+                            {{ transaction.timestamp_dimulai }}
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            {{ transaction.timestamp_berakhir }}
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            {{ transaction.metode_pembayaran }}
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            {{ transaction.nominal }}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="flex mx-auto justify-center items-center"> 
+        <a href="#" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onclick="window.history.back();">Back</a>
+    </div>
+</div>
+{% endblock content %}
