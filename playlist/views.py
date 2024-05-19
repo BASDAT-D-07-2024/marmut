@@ -7,6 +7,8 @@ from authentication.views import is_premium
 from utils.db_utils import get_db_connection
 import uuid
 from datetime import datetime
+from psycopg2 import IntegrityError, DatabaseError
+from psycopg2.errors import UniqueViolation
 
 def show_playlist(request):
     connection = get_db_connection()
@@ -131,8 +133,16 @@ def delete_song(request, playlist_id, song_id):
             WHERE id_SONG = %s AND ID_PLAYLIST = %s;
             """, [song_id, playlist_id])
         connection.commit()
-    except psycopg2.Error as e:
+        messages.success(request, "Song deleted successfully.")
+    except IntegrityError as e:
         print(e)
+        messages.error(request, "Integrity error: Unable to delete song. It may be linked to other records.")
+    except DatabaseError as e:
+        print(e)
+        messages.error(request, "Database error: Unable to delete song.")
+    except Exception as e:
+        print(e)
+        messages.error(request, "An unexpected error occurred.")
     finally:
         if connection:
             cursor.close()
@@ -148,23 +158,49 @@ def view_song(request, playlist_id, song_id):
 
     cursor = connection.cursor()
     cursor.execute(f"""
-        SELECT k.judul, s.id_konten, g.genre, n.nama, k.durasi, k.tanggal_rilis, s.total_play, s.total_download, al.judul, k.tahun
+        SELECT 
+            k.judul, 
+            s.id_konten, 
+            STRING_AGG(DISTINCT g.genre, ', ') AS genres,  -- Aggregate genres into a comma-separated string
+            STRING_AGG(DISTINCT n.nama, ', ') AS songwriters,  -- Aggregate songwriters into a comma-separated string
+            k.durasi, 
+            k.tanggal_rilis, 
+            s.total_play, 
+            s.total_download, 
+            al.judul AS album_judul, 
+            k.tahun,
+            a_ar.nama
         FROM song s
-        JOIN artist a ON s.id_artist = a.id
-        JOIN akun n ON a.email_akun = n.email
         JOIN playlist_song ps ON s.id_konten = ps.id_song
         JOIN konten k ON s.id_konten = k.id
-        JOIN user_playlist up ON a.email_akun = n.email
-        JOIN genre g ON s.id_konten = g.id_konten
-        JOIN album al ON s.id_album = al.id
-        WHERE up.id_playlist = '{playlist_id}' and s.id_konten = '{song_id}'
+        JOIN user_playlist up ON up.id_playlist = ps.id_playlist  -- Fetch user_playlist
+        JOIN songwriter_write_song sws ON sws.id_song = s.id_konten  -- Fetch songwriters
+        JOIN songwriter sw ON sws.id_songwriter = sw.id
+        JOIN akun n ON sw.email_akun = n.email
+        JOIN artist ar ON ar.id = s.id_artist
+        JOIN akun a_ar ON ar.email_akun = a_ar.email
+        JOIN genre g ON s.id_konten = g.id_konten  -- Fetch genres
+        JOIN album al ON s.id_album = al.id  -- Fetch album name
+        WHERE up.id_playlist = '{playlist_id}' 
+        AND s.id_konten = '{song_id}'
+        GROUP BY 
+            k.judul, 
+            s.id_konten, 
+            k.durasi, 
+            k.tanggal_rilis, 
+            s.total_play, 
+            s.total_download, 
+            al.judul, 
+            k.tahun,
+            a_ar.nama;
     """)
     rows = cursor.fetchall()[0]
+    print(rows)
     song = {
         'judul': rows[0],
         'id': str(rows[1]),
         'genre': rows[2],
-        'artist': rows[3],
+        'artist': rows[10],
         'durasi': rows[4],
         'tanggal_rilis': rows[5],
         'total_play':rows[6],
@@ -172,7 +208,10 @@ def view_song(request, playlist_id, song_id):
         'judul_album': rows[8],
         'tahun': rows[9],
         'is_premium': is_premium(email),
+        'songwriter': rows[3],
     }
+
+    # print(song)
 
     return render(request, 'view_song.html', song)
 
@@ -184,25 +223,35 @@ def add_song(request, playlist_id):
         selected_song_id = request.POST.get('song')
         cursor = connection.cursor()
         try:
-            # Use parameterized queries instead of formatting strings directly
             cursor.execute("""
                 INSERT INTO playlist_song (id_playlist, id_song)
                 VALUES (%s, %s);
                 """, (str(playlist_id), selected_song_id))
             connection.commit()
+            messages.success(request, "Song added successfully to the playlist.")
+        except UniqueViolation as e:
+            print(e)
+            connection.rollback()  # Rollback the transaction on error
+            messages.error(request, "This song is already in the playlist.")
+        except Exception as e:
+            print(e)
+            connection.rollback()  # Rollback the transaction on error
+            messages.error(request, "An unexpected error occurred.")
         finally:
             cursor.close()
+            connection.close()
+
         return redirect('playlist:user_playlist', playlist_id=playlist_id)
 
     cursor = connection.cursor()
     try:
         cursor.execute("""
-                        SELECT k.id, k.judul, ak.nama
-                        FROM song s
-                        JOIN konten k ON k.id = s.id_konten
-                        JOIN artist ar ON s.id_artist = ar.id
-                        JOIN akun ak ON ar.email_akun = ak.email;
-                    """)
+            SELECT k.id, k.judul, ak.nama
+            FROM song s
+            JOIN konten k ON k.id = s.id_konten
+            JOIN artist ar ON s.id_artist = ar.id
+            JOIN akun ak ON ar.email_akun = ak.email;
+        """)
         results = cursor.fetchall()
     finally:
         cursor.close()
@@ -291,3 +340,42 @@ def play_playlist(request, id_user_playlist):
     
     referer_url = request.META.get('HTTP_REFERER', 'default_fallback_view_name')
     return redirect(referer_url)
+
+def delete_playlist(request, playlist_id):
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    email = request.session.get('user', {}).get('email')
+    if not email:
+        return redirect('authentication:login')
+
+    cursor.execute(f"""
+            DELETE FROM PLAYLIST WHERE id = '{playlist_id}';
+        """)
+    connection.commit()
+    
+    return redirect('playlist:show_playlist')
+
+def edit_playlist(request, playlist_id):
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    email = request.session.get('user', {}).get('email')
+    if not email:
+        return redirect('authentication:login')
+
+    if request.method == 'POST':
+        judul = request.POST.get('judul')
+        deskripsi = request.POST.get('deskripsi')
+
+        cursor.execute(f"""
+                UPDATE USER_PLAYLIST 
+                SET judul = '{judul}', deskripsi = '{deskripsi}' 
+                WHERE id_playlist = '{playlist_id}';
+            """)
+        connection.commit()
+
+        return redirect('playlist:show_playlist')
+    
+    context = {
+        'id': playlist_id
+    }
+    return render(request, 'edit_playlist.html', context)

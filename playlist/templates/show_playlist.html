@@ -38,8 +38,10 @@
                     <td class="px-6 py-4 text-center">
                         {{ p.total_durasi }}
                     </td>
-                    <td class="px-6 py-4 text-center">
+                    <td class="flex justify-center gap-4 py-4 text-center">
                         <a href="/playlist/user_playlist/{{p.id_playlist}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Detail</a>
+                        <a href="/playlist/edit_playlist/{{p.id_playlist}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Ubah</a>
+                        <a href="/playlist/delete_playlist/{{p.id_playlist}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Hapus</a>
                     </td>
                 </tr>
                 {% endfor %}
