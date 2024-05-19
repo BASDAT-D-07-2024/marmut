@@ -1,4 +1,3 @@
-import locale
 import psycopg2
 import uuid
 from utils.db_utils import get_db_connection
