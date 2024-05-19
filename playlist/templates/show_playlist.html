@@ -2,54 +2,55 @@
 {% load static %}
 
 {% block content %}
-
-<div class="overflow-x-auto shadow-md sm:rounded-lg mb-8">
-    <div class="flex justify-between items-center p-3 bg-white dark:bg-gray-800">
-        <h1 class="text-lg font-bold text-gray-900 dark:text-white">My Playlist</h1>
-        <a href="/playlist/create_playlist" class="text-white bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded">Tambah Playlist</a>
+<div class="p-16">
+    <div class="overflow-x-auto shadow-md sm:rounded-lg mb-8">
+        <div class="flex justify-between items-center p-3 bg-white dark:bg-gray-800">
+            <h1 class="text-lg font-bold text-gray-900 dark:text-white">My Playlist</h1>
+            <a href="/playlist/create_playlist" class="text-white bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded">Tambah Playlist</a>
+        </div>
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Judul
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Jumlah Lagu
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Total Durasi
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Action
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if playlist %}
+                {% for p in playlist %}
+                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <td class="px-6 py-4 text-center">
+                        {{ p.judul }}
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        {{ p.jumlah_lagu }}
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        {{ p.total_durasi }}
+                    </td>
+                    <td class="px-6 py-4 text-center">
+                        <a href="/playlist/user_playlist/{{p.id_playlist}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Detail</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4" class="px-6 py-4 text-center">No playlists available.</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
     </div>
-    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" class="px-6 py-3 text-center">
-                    Judul
-                </th>
-                <th scope="col" class="px-6 py-3 text-center">
-                    Jumlah Lagu
-                </th>
-                <th scope="col" class="px-6 py-3 text-center">
-                    Total Durasi
-                </th>
-                <th scope="col" class="px-6 py-3 text-center">
-                    Action
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-        {% if playlist %}
-            {% for p in playlist %}
-            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                <td class="px-6 py-4 text-center">
-                    {{ p.judul }}
-                </td>
-                <td class="px-6 py-4 text-center">
-                    {{ p.jumlah_lagu }}
-                </td>
-                <td class="px-6 py-4 text-center">
-                    {{ p.total_durasi }}
-                </td>
-                <td class="px-6 py-4 text-center">
-                    <a href="/playlist/user_playlist/{{p.id_playlist}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Detail</a>
-                </td>
-            </tr>
-            {% endfor %}
-        {% else %}
-            <tr>
-                <td colspan="4" class="px-6 py-4 text-center">No playlists available.</td>
-            </tr>
-        {% endif %}
-        </tbody>
-    </table>
 </div>
 
 {% endblock content %}
