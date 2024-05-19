@@ -1,7 +1,7 @@
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python3.9 get-pip.py
 
-PYTHON_PATH=/usr/local/bin/python3.9
+PYTHON_PATH=/usr/bin/python3.9
 
 # Install dependencies
 $PYTHON_PATH -m pip install -r requirements.txt
