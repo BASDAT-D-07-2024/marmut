@@ -1,9 +1,11 @@
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python3.9 get-pip.py
 
-# build_files.sh
-python3.9 -m pip install -r requirements.txt
+PYTHON_PATH=/usr/local/bin/python3.9
 
-# make migrations
-python3.9 manage.py migrate 
-python3.9 manage.py collectstatic
+# Install dependencies
+$PYTHON_PATH -m pip install -r requirements.txt
+
+# Jalankan migrasi dan kumpulkan static files
+$PYTHON_PATH manage.py migrate 
+$PYTHON_PATH manage.py collectstatic --noinputc
