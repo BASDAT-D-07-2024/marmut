@@ -57,7 +57,10 @@ def checkout(request, jenis_paket):
                 metode_bayar = request.POST.get('metode_pembayaran')
                 nominal = reverse_format_rupiah(request.POST.get('nominal'))
 
-                cursor.execute('SELECT * FROM paket WHERE jenis = %s', (jenis_paket,))
+                query = f"""
+                    SELECT * FROM paket WHERE jenis = '{jenis_paket}'
+                """
+                cursor.execute(query)
                 paket = cursor.fetchone()
                 if paket is None:
                     messages.error(request, 'Paket not found')
@@ -67,7 +70,10 @@ def checkout(request, jenis_paket):
                 connection.commit()
                 messages.success(request, 'Subscription successful!')
             else:
-                cursor.execute('SELECT * FROM paket WHERE jenis = %s', (jenis_paket,))
+                query = f"""
+                    SELECT * FROM paket WHERE jenis = '{jenis_paket}'
+                """
+                cursor.execute(query)
                 paket = cursor.fetchone()
                 if paket is None:
                     messages.error(request, 'Paket not found')
