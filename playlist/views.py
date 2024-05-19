@@ -379,3 +379,78 @@ def edit_playlist(request, playlist_id):
         'id': playlist_id
     }
     return render(request, 'edit_playlist.html', context)
+
+def add_to_playlist_from_song(request, song_id):
+    connection = get_db_connection()
+    cursor = connection.cursor()
+    email = request.session.get('user', {}).get('email')
+    if not email:
+        return redirect('authentication:login')
+
+    if request.method == 'POST':
+        playlist_id = request.POST.get('playlist')
+        cursor = connection.cursor()
+        try:
+            cursor.execute("""
+                INSERT INTO playlist_song (id_playlist, id_song)
+                VALUES (%s, %s);
+                """, (str(playlist_id), song_id))
+            connection.commit()
+            messages.success(request, "Song added successfully to the playlist.")
+        except UniqueViolation as e:
+            print(e)
+            connection.rollback()  # Rollback the transaction on error
+            messages.error(request, "This song is already in the playlist.")
+        except Exception as e:
+            print(e)
+            connection.rollback()  # Rollback the transaction on error
+            messages.error(request, "An unexpected error occurred.")
+        finally:
+            cursor.close()
+            connection.close()
+
+        return redirect('playlist:user_playlist', playlist_id=playlist_id)
+
+    cursor.execute(f"""
+                SELECT 
+                    k.judul, 
+                    a.nama,
+                    k.id
+                FROM 
+                    KONTEN AS k
+                JOIN 
+                    song AS s ON s.id_konten = k.id
+                JOIN 
+                    artist AS ar ON ar.id = s.id_artist
+                JOIN 
+                    akun AS a ON a.email = ar.email_akun
+                WHERE 
+                    s.id_konten = '{song_id}';
+            """)
+    connection.commit()
+
+    res = cursor.fetchall()[0]
+    context = {
+        'judul': res[0],
+        'artist': res[1],
+        'id_song' : res[2]
+    }
+
+    cursor.execute(f"""
+                SELECT up.id_playlist, up.judul
+                FROM USER_PLAYLIST up
+                JOIN AKUN a ON up.email_pembuat = a.email
+                WHERE a.email = '{email}';
+            """)
+    connection.commit()
+
+    result = cursor.fetchall()
+    if result == []:
+        messages.error(request, "You have no playlist.")
+
+        return redirect('playlist:show_playlist')
+        
+    playlists = [{'id': str(data[0]), 'judul': data[1]} for data in result]
+    context['playlists'] = playlists
+    
+    return render(request, 'add_to_playlist_from_song.html', context)
