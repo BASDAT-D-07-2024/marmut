@@ -79,7 +79,6 @@ def user_playlist(request, playlist_id):
     WHERE up.email_pembuat = %s AND up.id_playlist = %s;
     """, [email, playlist_id])
     
-
     hasil = cursor.fetchall()
     context = {}
 
@@ -87,8 +86,6 @@ def user_playlist(request, playlist_id):
         context["is_creator"] = True
     else:
         context["is_creator"] = False
-
-    print(hasil)
 
     # Check if 'hasil' has any content
     if hasil:
@@ -195,7 +192,7 @@ def view_song(request, playlist_id, song_id):
             a_ar.nama;
     """)
     rows = cursor.fetchall()[0]
-    print(rows)
+
     song = {
         'judul': rows[0],
         'id': str(rows[1]),
@@ -210,8 +207,6 @@ def view_song(request, playlist_id, song_id):
         'is_premium': is_premium(email),
         'songwriter': rows[3],
     }
-
-    # print(song)
 
     return render(request, 'view_song.html', song)
 
