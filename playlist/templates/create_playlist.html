@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="p-16">
+    <div class="w-full p-6 mb-8 bg-white border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
+        <h5 class="mb-4 text-2xl text-center font-bold tracking-tight text-gray-900 dark:text-white">Tambah Playlist</h5>
+        <form method="POST" action="/playlist/create_playlist" class="w-full flex flex-col gap-4">
+            {% csrf_token %}
+            <div class="flex items-start flex-col justify-start">
+                <label for="judul">Judul:</label>
+                <input type="text" name='judul' class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500" required>
+            </div>
+            <div class="flex items-start flex-col justify-start">
+                <label for="deskripsi">Deskripsi:</label>
+                <input type="text" name='deskripsi' class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500" required>
+            </div>
+            <button type="submit" class="bg-[#5781C4] hover:bg-[#749DDC] text-white font-medium py-2 px-4 rounded-md shadow-sm">
+                <span class="justify-center">
+                    <span class="ml-2">Submit</span>
+                </span>
+            </button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
