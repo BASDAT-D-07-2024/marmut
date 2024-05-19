@@ -4,10 +4,11 @@
 {% block content %}
 
 <div class="overflow-x-auto shadow-md sm:rounded-lg mb-8">
+    <div class="flex justify-between items-center p-3 bg-white dark:bg-gray-800">
+        <h1 class="text-lg font-bold text-gray-900 dark:text-white">My Playlist</h1>
+        <a href="/playlist/create_playlist" class="text-white bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded">Tambah Playlist</a>
+    </div>
     <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <caption class="p-3 text-lg font-bold text-center rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-            My Playlist
-        </caption>
         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
                 <th scope="col" class="px-6 py-3 text-center">
@@ -27,7 +28,7 @@
         <tbody>
         {% if playlist %}
             {% for p in playlist %}
-            <tr>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                 <td class="px-6 py-4 text-center">
                     {{ p.judul }}
                 </td>
@@ -38,44 +39,17 @@
                     {{ p.total_durasi }}
                 </td>
                 <td class="px-6 py-4 text-center">
-                    <a href="/playlist/user_playlist/{{p.id_user_playlist}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Detail</a>
+                    <a href="/playlist/user_playlist/{{p.id_playlist}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Detail</a>
                 </td>
             </tr>
             {% endfor %}
         {% else %}
             <tr>
-                <td colspan="4">No playlists available.</td>
+                <td colspan="4" class="px-6 py-4 text-center">No playlists available.</td>
             </tr>
         {% endif %}
         </tbody>
     </table>
 </div>
-
-<!-- <script>
-    function deletePlaylist(button) {
-        const url = button.getAttribute('data-url');
-        
-        if (confirm('Are you sure you want to delete this playlist?')) {
-            fetch(url, {
-                method: 'DELETE',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then(response => {
-                if (response.ok) {
-                    // If the delete is successful, remove the row from the table
-                    const row = button.closest('tr');
-                    row.remove();
-                } else {
-                    alert('Failed to delete the playlist');
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        }
-    }
-</script> -->
-
 
 {% endblock content %}

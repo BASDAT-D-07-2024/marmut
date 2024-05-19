@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <h1>Tambah Playlist</h1>
+    <form method="POST" action="/playlist/create_playlist">
+        {% csrf_token %}
+        <div>
+            <label for="judul">Judul:</label>
+            <input type="text" name='judul'>
+        </div>
+        <div>
+            <label for="deskripsi">Deskripsi:</label>
+            <input type="text" name='deskripsi'>
+        </div>
+        <button type="submit">SUBMIT</button>
+    </form>
+</div>
+{% endblock %}
+

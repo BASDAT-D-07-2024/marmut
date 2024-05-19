@@ -11,49 +11,82 @@
             <tbody>
                 <tr>
                     <td class="px-6 py-4 font-medium">Judul:</td>
-                    <td class="px-6 py-4">Himalaya</td>
+                    <td class="px-6 py-4">{{judul}}</td>
                 </tr>
                 <tr>
                     <td class="px-6 py-4 font-medium">Genre:</td>
-                    <td class="px-6 py-4">Pop, Classic</td>
+                    <td class="px-6 py-4">{{genre}}</td>
                 </tr>
                 <tr>
                     <td class="px-6 py-4 font-medium">Artis:</td>
-                    <td class="px-6 py-4">Maliq n D’Essentials</td>
+                    <td class="px-6 py-4">{{artist}}</td>
                 </tr>
                 <tr>
                     <td class="px-6 py-4 font-medium">Durasi:</td>
-                    <td class="px-6 py-4">3 menit 27 detik</td>
+                    <td class="px-6 py-4">{{durasi}} menit</td>
                 </tr>
                 <tr>
                     <td class="px-6 py-4 font-medium">Tanggal Rilis:</td>
-                    <td class="px-6 py-4">7 Mei 2018</td>
+                    <td class="px-6 py-4">{{tanggal_rilis}}</td>
                 </tr>
                 <tr>
                     <td class="px-6 py-4 font-medium">Tahun:</td>
-                    <td class="px-6 py-4">2024</td>
+                    <td class="px-6 py-4">{{ tahun }}</td>
                 </tr>
                 <tr>
                     <td class="px-6 py-4 font-medium">Album:</td>
-                    <td class="px-6 py-4">Album1</td>
+                    <td class="px-6 py-4">{{judul_album}}</td>
                 </tr>
                 <tr>
                     <td class="px-6 py-4 font-medium">Total Play:</td>
-                    <td class="px-6 py-4">0</td>
+                    <td class="px-6 py-4">{{total_play}}</td>
                 </tr>
                 <tr>
                     <td class="px-6 py-4 font-medium">Total Download:</td>
-                    <td class="px-6 py-4">0</td>
+                    <td class="px-6 py-4">{{total_download}}</td>
                 </tr>
                 <tr>
                     <td colspan="2" class="px-6 py-4 text-center">
-                        <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Play</a>
-                        <a href="#" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2">Add</a>
+                        <input type="range" id="songSlider" value="0" min="0" max="100" class="slider">
+                        <p>Slide up to 70% to play the song</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="px-6 py-4 text-center">
+                        <button onclick="playSong()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Play</button>
+                        <a href="#" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2">Add to Playlist</a>
+                        {% if is_premium %} 
+                        <a href="#" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2">Download</a>
+                        {% endif %}
                         <a href="#" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">Back</a>
                     </td>
                 </tr>
             </tbody>
         </table>
+        {% if messages %}
+            <div class="messages fixed top-5 right-5 z-50 w-1/3 bg-white shadow-lg rounded-lg overflow-hidden">
+                {% for message in messages %}
+                <div class="message bg-{{ message.tags }}-100 border-l-4 border-{{ message.tags }}-500 text-{{ message.tags }}-700 p-4" role="alert">
+                    <p class="font-bold">Notice</p>
+                    <p>{{ message }}</p>
+                    <span class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="this.parentElement.style.display='none';">
+                        <a href="#">X</a>
+                    </span>
+                </div>
+                {% endfor %}
+            </div>
+        {% endif %}
     </div>
 </div>
+
+<script>
+function playSong() {
+    const slider = document.getElementById('songSlider');
+    if (slider.value > 70) {
+        window.location.href = '/playlist/play_song/{{ id }}';
+    } else {
+        alert("Belum cukup untuk memutar lagu.");
+    }
+}
+</script>
 {% endblock content %}

@@ -11,32 +11,32 @@
             <tbody>
                 <tr>
                     <td class="px-6 py-4 font-medium">Judul:</td>
-                    <td class="px-6 py-4">{{ playlist.title }}</td>
+                    <td class="px-6 py-4">{{ judul_playlist }}</td>
                 </tr>
                 <tr>
                     <td class="px-6 py-4 font-medium">Pembuat:</td>
-                    <td class="px-6 py-4">{{ playlist.creator }}</td>
+                    <td class="px-6 py-4">{{ nama_pembuat }}</td>
                 </tr>
                 <tr>
                     <td class="px-6 py-4 font-medium">Jumlah Lagu:</td>
-                    <td class="px-6 py-4">{{ playlist.song_count }}</td>
+                    <td class="px-6 py-4">{{ jumlah_lagu }}</td>
                 </tr>
                 <tr>
                     <td class="px-6 py-4 font-medium">Total Durasi:</td>
-                    <td class="px-6 py-4">{{ playlist.total_duration }}</td>
+                    <td class="px-6 py-4">{{ total_durasi }}</td>
                 </tr>
                 <tr>
                     <td class="px-6 py-4 font-medium">Tanggal Dibuat:</td>
-                    <td class="px-6 py-4">{{ playlist.created_date|date:"d/m/Y" }}</td>
+                    <td class="px-6 py-4">{{ tanggal_dibuat }}</td>
                 </tr>
                 <tr>
                     <td class="px-6 py-4 font-medium">Deskripsi:</td>
-                    <td class="px-6 py-4">{{ playlist.description }}</td>
+                    <td class="px-6 py-4">{{ deskripsi }}</td>
                 </tr>
                 <tr>
                     <td colspan="4" class="text-center p-4">
-                        <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Shuffle Play</a>
-                        <a class="font-medium text-blue-600 dark:text-blue-500 hover:underline ml-4">Kembali</a>
+                        <a href="/playlist/play_playlist/{{ id_user_playlist }}/" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Shuffle Play</a>
+                        <a class="font-medium text-grey-600 dark:text-grey-500 hover:underline ml-4">Kembali</a>
                     </td>
                 </tr>
             </tbody>
@@ -62,6 +62,7 @@
                 </tr>
             </thead>
             <tbody>
+                {% if songs %}
                 {% for song in songs %}
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
@@ -74,16 +75,35 @@
                         {{ song.durasi }} menit
                     </td>
                     <td class="px-6 py-4 text-center">
-                        <a href="{% url 'song:show_song' %}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline ms-3">Lihat</a>
-                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline ms-3">Play</a>
-                        <button class="font-medium text-red-600 hover:underline" data-url="{% url 'playlist:delete_song' song.id %}" onclick="deleteSong(this)">Delete</button>
+                        <a href="/playlist/view_song/{{ playlist_id }}/{{ song.id }}/" class="font-medium text-blue-600 dark:text-blue-500 hover:underline ms-3">Lihat</a>
+                        <a href="/playlist/play_song/{{song.id}}/" class="font-medium text-blue-600 dark:text-blue-500 hover:underline ms-3 p-4">Play</a>
+                        {% if is_creator %} 
+                        <a href="/playlist/delete_song/{{playlist_id}}/{{song.id}}/">
+                            <button class="font-medium text-red-600 hover:underline" data-url="/playlist/delete_song/{{playlist_id}}/{{song.id}}/">Delete</button>
+                        </a>
+                        {% endif %} 
                     </td>
                 </tr>
                 {% endfor %}
+                {% endif %}
+                {% if messages %}
+                <div class="messages fixed top-5 right-5 z-50 w-1/3 bg-white shadow-lg rounded-lg overflow-hidden">
+                    {% for message in messages %}
+                    <div class="message bg-{{ message.tags }}-100 border-l-4 border-{{ message.tags }}-500 text-{{ message.tags }}-700 p-4" role="alert">
+                        <p class="font-bold">Notice</p>
+                        <p>{{ message }}</p>
+                        <span class="absolute top-0 bottom-0 right-0 px-4 py-3" onclick="this.parentElement.style.display='none';">
+                            <a href="#">X</a>
+                        </span>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
             </tbody>
             <tfoot>
                 <tr>
                     <td colspan="4" class="text-center p-4">
+                        <a href="/playlist/add_song/{{ playlist_id }}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline ms-3">Tambah Lagu</a>
                     </td>
                 </tr>
             </tfoot>
@@ -91,32 +111,5 @@
     </div>
 </div>
 
-<script>
-    function deleteSong(button) {
-        const url = button.getAttribute('data-url');
-
-        if (confirm('Are you sure you want to delete this song?')) {
-            fetch(url, {
-                method: 'DELETE',
-                headers: {
-                    'X-CSRFToken': '{{ csrf_token }}',
-                    'Content-Type': 'application/json',
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    // If the delete is successful, remove the row from the table
-                    button.closest('tr').remove();
-                } else {
-                    alert('Failed to delete the song.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred while deleting the song.');
-            });
-        }
-    }
-</script>
 
 {% endblock content %}

@@ -4,7 +4,7 @@
 {% block content %}
 <div class="container">
     <h1>Tambah Lagu</h1>
-    <form action="{% url 'add_song' %}" method="post">
+    <form method="post" action="/playlist/add_song/{{ id_playlist }}/">
         {% csrf_token %}
         <label for="song">Lagu:</label>
         <select id="song" name="song">
