@@ -1,3 +1,5 @@
+export LC_ALL=C
+
 curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 python3.9 get-pip.py
 
