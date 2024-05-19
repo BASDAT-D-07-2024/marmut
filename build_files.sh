@@ -9,4 +9,4 @@ $PYTHON_PATH -m pip install -r requirements.txt
 
 # Jalankan migrasi dan kumpulkan static files
 $PYTHON_PATH manage.py migrate 
-$PYTHON_PATH manage.py collectstatic --noinputc
+$PYTHON_PATH manage.py collectstatic
