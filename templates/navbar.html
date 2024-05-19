@@ -10,11 +10,11 @@
     {% endif %}
   </div>
   {% if 'Guest' not in role and 'label' not in role %}
-  <form class="flex items-center w-[30%] mx-auto">   
-    <label for="voice-search" class="sr-only">Search</label>
+  <form method="post" action="{% url 'search:search_result' %}" class="flex items-center w-[30%] mx-auto">   
+    <label for="search_text" class="sr-only">Search</label>
     <div class="relative w-full">
-      <input type="text" id="voice-search" class="bg-[#AECEFF] border border-gray-500 text-black text-sm rounded-lg block w-full p-2.5" placeholder="Search ..." required />
-      <button type="button" class="absolute inset-y-0 end-0 flex items-center pe-3">
+      <input type="text" id="search_text" name="search_text" class="bg-[#AECEFF] border border-gray-500 text-black text-sm rounded-lg block w-full p-2.5" placeholder="Search ..." required />
+      <button type="submit" class="absolute inset-y-0 end-0 flex items-center pe-3">
         <svg class="w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
         </svg>
@@ -42,10 +42,10 @@
         </div>
       {% else %}
         <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-blue-300 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-blue-300 focus:bg-blue-300 focus:outline-none focus:shadow-outline" href="{% url 'chart:chart_list' %}">Chart</a>
-        <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-blue-300 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-blue-300 focus:bg-blue-300 focus:outline-none focus:shadow-outline" href="#">Playlist</a>
-        <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-blue-300 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-blue-300 focus:bg-blue-300 focus:outline-none focus:shadow-outline" href="#">Subcription</a>
+        <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-blue-300 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-blue-300 focus:bg-blue-300 focus:outline-none focus:shadow-outline" href="{% url 'playlist:show_playlist' %}">Playlist</a>
+        <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-blue-300 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-blue-300 focus:bg-blue-300 focus:outline-none focus:shadow-outline" href="{% url 'subscription:subscriptions' %}">Subscription</a>
         {% if 'premium' in role %}
-        <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-blue-300 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-blue-300 focus:bg-blue-300 focus:outline-none focus:shadow-outline" href="#">Download</a>
+        <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-blue-300 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-blue-300 focus:bg-blue-300 focus:outline-none focus:shadow-outline" href="{% url 'download:list_download' %}">Download</a>
         {% endif %}
         {% if 'podcaster' in role %}
         <a class="px-4 py-2 mt-2 text-sm font-semibold bg-transparent rounded-lg dark-mode:bg-transparent dark-mode:hover:bg-gray-600 dark-mode:focus:bg-gray-600 dark-mode:focus:text-white dark-mode:hover:text-white dark-mode:text-blue-300 md:mt-0 md:ml-4 hover:text-gray-900 focus:text-gray-900 hover:bg-blue-300 focus:bg-blue-300 focus:outline-none focus:shadow-outline" href="{% url 'podcast:list_podcast' %}">Podcast</a>

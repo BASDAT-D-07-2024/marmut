@@ -1,86 +1,59 @@
 {% extends 'base.html' %}
 {% load static %}
+
 {% block content %}
-<title>Song Details</title>
-<style>
-    body {
-        font-family: 'Lexend', sans-serif;
-        margin: 0;
-        padding: 0;
-        background: white;
-    }
-    .page-container {
-        width: 800px; /* Lebar container dikurangi */
-        margin: auto;
-        background: #C5D8FF;
-        border-radius: 20px;
-        padding: 20px; /* Padding dikurangi */
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    .details-list {
-        list-style: none;
-        padding: 0;
-        margin: 0; /* Menghilangkan margin default */
-    }
-    .details-list li {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        padding: 8px 0; /* Padding dikurangi */
-    }
-    .label {
-        min-width: 120px; /* Width label ditetapkan */
-        font-weight: 600;
-        color: #443642;
-    }
-    .value {
-        font-weight: 400;
-        color: black;
-        text-align: left; /* Text align left untuk value */
-    }
-    .controls {
-        display: flex;
-        flex-direction: column; /* Mengubah ke flex-direction column */
-        align-items: center;
-        gap: 10px; /* Mengurangi gap antar tombol */
-        margin-top: 20px; /* Memberi margin atas */
-    }
-    .control-button {
-        padding: 10px 20px;
-        border-radius: 12px;
-        font-size: 16px;
-        font-weight: 600;
-        text-align: center;
-        color: white;
-        text-decoration: none;
-        display: inline-block;
-    }
-    h1 {
-        font-size: 32px;
-        font-family: 'Urbanist', sans-serif;
-        font-weight: 800;
-        color: #443642;
-    }
-    .primary-button { background: #5781C4; }
-    .secondary-button { background: #8B9BB5; }
-</style>
-<div class="page-container">
-    <h1>Song Details</h1>
-    <ul class="details-list">
-        <li><span class="label">Judul:</span> <span class="value">Himalaya</span></li>
-        <li><span class="label">Genre:</span> <span class="value">Pop, Classic</span></li>
-        <li><span class="label">Artis:</span> <span class="value">Maliq n D’Essentials</span></li>
-        <li><span class="label">Durasi:</span> <span class="value">3 menit 27 detik</span></li>
-        <li><span class="label">Tanggal Rilis:</span> <span class="value">7 Mei 2018</span></li>
-        <li><span class="label">Tahun:</span> <span class="value">2024</span></li>
-        <li><span class="label">Album:</span> <span class="value">Album1</span></li>
-        <li><span class="label">Total Play:</span> <span class="value">0</span></li>
-        <li><span class="label">Total Download:</span> <span class="value">0</span></li>
-    </ul>
-    <div class="controls">
-        <a class="control-button primary-button">Play</a>
-        <a class="control-button secondary-button">Add</a>
-        <a class="control-button secondary-button">Back</a>
+<div class="p-16">
+    <div class="overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+            <caption class="p-5 text-lg font-semibold text-center text-gray-900 bg-white dark:text-white dark:bg-gray-800">
+                Song Details
+            </caption>
+            <tbody>
+                <tr>
+                    <td class="px-6 py-4 font-medium">Judul:</td>
+                    <td class="px-6 py-4">Himalaya</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 font-medium">Genre:</td>
+                    <td class="px-6 py-4">Pop, Classic</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 font-medium">Artis:</td>
+                    <td class="px-6 py-4">Maliq n D’Essentials</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 font-medium">Durasi:</td>
+                    <td class="px-6 py-4">3 menit 27 detik</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 font-medium">Tanggal Rilis:</td>
+                    <td class="px-6 py-4">7 Mei 2018</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 font-medium">Tahun:</td>
+                    <td class="px-6 py-4">2024</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 font-medium">Album:</td>
+                    <td class="px-6 py-4">Album1</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 font-medium">Total Play:</td>
+                    <td class="px-6 py-4">0</td>
+                </tr>
+                <tr>
+                    <td class="px-6 py-4 font-medium">Total Download:</td>
+                    <td class="px-6 py-4">0</td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="px-6 py-4 text-center">
+                        <a href="#" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Play</a>
+                        <a href="#" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2">Add</a>
+                        <a href="#" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded ml-2">Back</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
 {% endblock content %}

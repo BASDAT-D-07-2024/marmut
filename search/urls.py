@@ -5,4 +5,5 @@ app_name = 'search'
 
 urlpatterns = [
     path('', search_result, name='search_result'),
+    path('/', search_result, name='search_result'),
 ]

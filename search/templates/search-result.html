@@ -3,9 +3,12 @@
 {% block content %}
 <div class="px-16 py-8 justify-center">
     <div class="overflow-x-auto shadow-md sm:rounded-lg mb-8">
+        {% if not songs and not podcasts and not playlists %}
+        <h3 class="text-center">Maaf, pencarian untuk "{{ search_text }}" tidak ditemukan</h3>
+        {% else %}
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <caption class="p-5 text-lg font-bold text-center rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-                Hasil Pencarian "love"
+                Hasil Pencarian "{{ search_text }}"
             </caption>
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
@@ -24,79 +27,63 @@
                 </tr>
             </thead>
             <tbody>
+                {% if songs %}
+                {% for song in songs %}
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        SONG
-                    </th>
                     <td class="px-6 py-4 text-center">
-                        Love is in the air
+                        {{ song.tipe }}
                     </td>
                     <td class="px-6 py-4 text-center">
-                        Artist1
+                        {{ song.judul }}
                     </td>
                     <td class="px-6 py-4 text-center">
-                        <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline">See</button>
+                        {{ song.oleh }}
+                    </td>
+                    <td class="flex justify-center gap-4 py-4 text-center">
+                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Lihat</a>
                     </td>
                 </tr>
+                {% endfor %}
+                {% endif %}
+                {% if podcasts %}
+                {% for podcast in podcasts %}
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        SONG
-                    </th>
                     <td class="px-6 py-4 text-center">
-                        What is love
+                        {{ podcast.tipe }}
                     </td>
                     <td class="px-6 py-4 text-center">
-                        Artist2
+                        {{ podcast.judul }}
                     </td>
                     <td class="px-6 py-4 text-center">
-                        <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline">See</button>
+                        {{ podcast.oleh }}
+                    </td>
+                    <td class="flex justify-center gap-4 py-4 text-center">
+                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Lihat</a>
                     </td>
                 </tr>
+                {% endfor %}
+                {% endif %}
+                {% if playlists %}
+                {% for playlist in playlists %}
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        PODCAST
-                    </th>
                     <td class="px-6 py-4 text-center">
-                        Love is Blind Pod
+                        {{ playlist.tipe }}
                     </td>
                     <td class="px-6 py-4 text-center">
-                        Podcaster1
+                        {{ playlist.judul }}
                     </td>
                     <td class="px-6 py-4 text-center">
-                        <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline">See</button>
+                        {{ playlist.oleh }}
+                    </td>
+                    <td class="flex justify-center gap-4 py-4 text-center">
+                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Lihat</a>
                     </td>
                 </tr>
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        USER PLAYLIST
-                    </th>
-                    <td class="px-6 py-4 text-center">
-                        90s Love Songs
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        User1
-                    </td>
-                    <td class="px-6 py-4 text-center">
-                        <button class="font-medium text-blue-600 dark:text-blue-500 hover:underline">See</button>
-                    </td>
-                </tr>
+                {% endfor %}
+                {% endif %}
             </tbody>
         </table>
+        {% endif %}
     </div>
-    <!--
-    <div id= "nothing" class="flex justify-center items-center flex-col p-6 h-32 mb-8 bg-sky-200 border border-gray-200 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-15 h-15 text-gray-500 mr-2">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15.182 16.318A4.486 4.486 0 0 0 12.016 15a4.486 4.486 0 0 0-3.198 1.318M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z" />
-        </svg>
-        <h5 class="text-xl font-bold mt-3 tracking-tight text-gray-500 dark:text-white">Maaf, pencarian untuk "love" tidak ditemukan</h5>
-    </div>
--->
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-beta.1/js/select2.min.js"></script>
-<script>
-    
-    
-</script>
 {% endblock content %}

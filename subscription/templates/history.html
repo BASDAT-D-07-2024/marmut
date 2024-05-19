@@ -5,44 +5,52 @@
     <div class="overflow-x-auto shadow-md sm:rounded-lg mb-8">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <caption class="p-5 text-lg font-bold text-center rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-                Daftar Lagu
+                Riwayat Transaksi Paket
             </caption>
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="px-6 py-3 text-center">
-                        Judul Lagu
+                        Jenis
                     </th>
                     <th scope="col" class="px-6 py-3 text-center">
-                        Oleh
+                        Tanggal Dimulai
                     </th>
                     <th scope="col" class="px-6 py-3 text-center">
-                        Actions
+                        Tanggal Berakhir
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Metode Pembayaran
+                    </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        Nominal
                     </th>
                 </tr>
             </thead>
             <tbody>
-                {% for lagu in downloaded_songs %}
+                {% for transaction in transactions %}
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ lagu.title }}
+                            {{ transaction.jenis_paket }}
                         </th>
                         <td class="px-6 py-4 text-center">
-                            {{ lagu.artist }}
+                            {{ transaction.timestamp_dimulai }}
                         </td>
                         <td class="px-6 py-4 text-center">
-                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Lihat</a>
-                            <form action="{% url 'download:delete_download' lagu.id %}" method="post" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this song?');">
-                                {% csrf_token %}
-                                <button type="submit" class="font-medium text-red-600 dark:text-red-500 hover:underline">Hapus</button>
-                            </form>
+                            {{ transaction.timestamp_berakhir }}
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            {{ transaction.metode_pembayaran }}
+                        </td>
+                        <td class="px-6 py-4 text-center">
+                            {{ transaction.nominal }}
                         </td>
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
-    
     <div class="flex mx-auto justify-center items-center"> 
-        <button class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onclick="window.history.back();">Back</button>
+        <a href="#" class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded" onclick="window.history.back();">Back</a>
     </div>
+</div>
 {% endblock content %}
