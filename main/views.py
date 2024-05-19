@@ -47,6 +47,12 @@ def dashboard(request):
             return render(request, 'dashboard-label.html', context)
         else:
             roles_capitalized = [role.capitalize() for role in role]
+            if "Nonpremium" in roles_capitalized:
+                cursor.execute('SELECT * FROM PREMIUM WHERE email = %s', (user['email'],))
+                premium = cursor.fetchone()
+                if premium is not None:
+                    roles_capitalized.remove("Nonpremium")
+                    roles_capitalized.append("Premium")
             roles_string = ', '.join(roles_capitalized)
     
             context['is_podcaster'] = 'podcaster' in role

@@ -68,6 +68,10 @@ def checkout(request, jenis_paket):
 
                 cursor.execute('INSERT INTO transaction (id, jenis_paket, email, timestamp_dimulai, timestamp_berakhir, metode_bayar, nominal) VALUES (%s, %s, %s, %s, %s, %s, %s)', (id, jenis_paket, email, timestamp_dimulai, timestamp_berakhir, metode_bayar, nominal))
                 connection.commit()
+                cursor.execute('DELETE FROM NONPREMIUM WHERE email = %s', (email,))
+                connection.commit()
+                cursor.execute('INSERT INTO PREMIUM (email) VALUES (%s)', (email,))
+                connection.commit()
                 messages.success(request, 'Subscription successful!')
             else:
                 query = f"""
